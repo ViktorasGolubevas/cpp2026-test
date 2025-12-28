@@ -18,3 +18,13 @@ version: "1.0"
 
 ```cpp
 // Minimalus pavyzdys
+
+int main() {
+    
+}
+
+```
+
+## 🟨 3. Papildomas pavyzdys
+
+[👉 Atidaryti ir išbandyti kodą (Sandbox)](https://godbolt.org/z/6P3oG7Mfa)
