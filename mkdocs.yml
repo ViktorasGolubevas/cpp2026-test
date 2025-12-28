@@ -1,0 +1,10 @@
+site_name: Programavimas C++ (1 kursas)
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.expand
+markdown_extensions:
+  - admonition  # Leidžia kurti spalvotus blokus
+  - pymdownx.highlight
+  - pymdownx.superfences
