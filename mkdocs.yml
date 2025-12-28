@@ -1,10 +1,17 @@
 site_name: Programavimas C++ (1 kursas)
 theme:
   name: material
+  language: lt
   features:
     - content.code.copy
     - navigation.expand
 markdown_extensions:
   - admonition  # Leidžia kurti spalvotus blokus
   - pymdownx.highlight
-#  - pymdownx.superfences
+  - pymdownx.superfences
+
+nav:
+  - 'Pradžia': index.md
+  - 'Paskaitos':
+      - 'Nuo C link C++ (Stack)': stack-evoliucija.md
+      - 'Objektų masyvai': stack-evoliucija.md  # Jei turite tokį failą
