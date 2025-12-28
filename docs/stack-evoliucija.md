@@ -837,3 +837,5 @@ graph TD
 
 !!! note "Pastaba"
     Sveikinį, kad jums ir tada reikia naudoti `new[]` masyvų.
+
+!!! info "Informacija"
