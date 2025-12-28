@@ -824,16 +824,16 @@ graph TD
 
 #### C. Admonitions (Perspėjimai)
 
-```markdown
 !!! warning "Dažna klaida: Object Slicing"
     Jei priskirsite `GraduateStudent` objektą į `Student` kintamąjį (ne rodyklę),
     papildomi duomenys bus **nupjauti**!
-    
-    ```cpp
+
+```cpp
     Student s = GraduateStudent("Jonas"); // Blogai!
-    ```
+```
 
 !!! tip "Patarimas"
     Visada naudokite `std::vector` vietoj `new[]` masyvų, nebent turite labai specifinę priežastį.
-```
 
+!!! note "Pastaba"
+    Sveikinį, kad jums ir tada reikia naudoti `new[]` masyvų.
