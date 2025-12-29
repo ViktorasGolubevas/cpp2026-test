@@ -53,7 +53,7 @@ graph TD
     style GS fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
-#### C. Admonitions (Perspėjimai)
+### Admonitions (Perspėjimai)
 
 !!! warning "Dažna klaida: Object Slicing"
     Jei priskirsite `GraduateStudent` objektą į `Student` kintamąjį (ne rodyklę),
