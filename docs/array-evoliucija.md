@@ -2,7 +2,7 @@
 title: "Objektų masyvų evoliucija C++: Nuo C masyvų iki STL konteinerių"
 author: "Programavimo metodikos specialistas"
 date: "2025-12-27"
-keywords: "C++, objektų masyvai, evoliucija, STL, rodyklės, agregacija, Student klasė"
+keywords: "objektų masyvai, STL, rodyklės, agregacija, 'Student' klasė, evoliucinis metodas"
 ---
 
 # Objektų masyvų evoliucija C++: Nuo C masyvų iki STL konteinerių
@@ -10,10 +10,11 @@ keywords: "C++, objektų masyvai, evoliucija, STL, rodyklės, agregacija, Studen
 ## Įvadas: Kodėl objektų masyvai sudėtingi?
 
 Objektų masyvai C++ kalboje yra viena iš sudėtingiausių temų, nes čia susipina:
+
 - **Atminties valdymas** (stekas vs heap)
 - **Objektų gyvavimo ciklas** (konstruktoriai/destruktoriai)
 - **Rodyklių semantika** (rodyklė į masyvą vs rodyklių masyvas)
-- **Polimorfizmas** (virtualūs metodai masyve)
+- **Polimorfizmas** (virtualūs metodai masyvo elementams)
 - **STL abstrakcijos** (array, vector, smart_ptr)
 
 Šis vadovas naudoja **evoliucinį metodą** - kiekvienas etapas sprendžia ankstesnio problemas ir pristato naują konceptą.
