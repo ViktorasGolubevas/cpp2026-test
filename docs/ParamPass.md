@@ -4,11 +4,11 @@ marp: true
 ---
 
 # Parametrų perdavimo mechanizmai
-## Value vs. Pointer vs. Reference
+## **Value** vs. **Pointer** vs. **Reference**
 
 ---
 
-## 1. Perdavimas pagal reikšmę (By Value)
+## 1. Perdavimas pagal reikšmę (_call/pass by value_)
 
 Tai vienintelis "tikras" C kalbos mechanizmas.
 
@@ -32,7 +32,7 @@ void swap_blogas(int x, int y) { // Gauna KOPIJAS (x=1, y=2)
 
 ---
 
-## 2. Imituojamas perdavimas pagal nuorodą (C Pointer)
+## 2. C rodyklėmis imituojamas perdavimas pagal nuorodą ("_call/pass by reference_")
 
 C kalboje norėdami pakeisti originalą, turime "gudrauti" naudodami adresus.
 
@@ -54,7 +54,7 @@ void swap_ptr(int* x, int* y) { // Gauna ADRESUS
 
 ---
 
-## 3. C++ Nuorodos (References)
+## 3. C++ perdavimas pagal nuorodas (_call/pass by reference_)
 
 C++ įveda **tikrąjį** perdavimą pagal nuorodą.
 Nuoroda (`int&`) – tai **pseudonimas** (alias). Tai lyg antras vardas tam pačiam kintamajam.
