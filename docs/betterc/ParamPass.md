@@ -22,14 +22,14 @@ Tai saugu, bet neefektyvu dideliems objektams ir netinka, kai norime pakeisti or
 </div>
 
 ```cpp
-void swap_blogas(int x, int y) { // Gauna KOPIJAS (x=1, y=2)
+void swap_val(int x, int y) { // Gauna KOPIJAS (x=1, y=2)
     int temp = x;
     x = y;
     y = temp;
 } // Čia kopijos sunaikinamos. Originalai a ir b nepakito.
 ```
 
-[👉 Vizualizuoti atmintį (Python Tutor)](https://pythontutor.com/render.html#code=%23include%20%3Ciostream%3E%0Avoid%20swap_blogas%28int%20x,%20int%20y%29%20%7B%20//%20Gauna%20KOPIJAS%20%28x%3D1,%20y%3D2%29%0A%20%20%20%20int%20temp%20%3D%20x%3B%0A%20%20%20%20x%20%3D%20y%3B%0A%20%20%20%20y%20%3D%20temp%3B%0A%7D%0Aint%20main%28%29%20%7B%0A%20%20int%20a%3D1,%20b%3D2%3B%0A%20%20swap_blogas%28a,b%29%3B%0A%20%20/*%20a%3D1,b%3D2%20*/%0A%7D&cumulative=false&curInstr=0&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=cpp_g%2B%2B9.3.0&rawInputLstJSON=%5B%5D&textReferences=false)
+[👉 Python Tutor](https://pythontutor.com/render.html#code=%23include%20%3Ciostream%3E%0Avoid%20swap_val%28int%20x,%20int%20y%29%20%7B%20//%20Gauna%20KOPIJAS%20%28x%3D1,%20y%3D2%29%0A%20%20%20%20int%20temp%20%3D%20x%3B%0A%20%20%20%20x%20%3D%20y%3B%0A%20%20%20%20y%20%3D%20temp%3B%0A%7D%0Aint%20main%28%29%20%7B%0A%20%20int%20a%3D1,%20b%3D2%3B%0A%20%20swap_val%28a,b%29%3B%0A%20%20/*%20a%3D1,b%3D2%20*/%0A%7D&cumulative=false&curInstr=9&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=cpp_g%2B%2B9.3.0&rawInputLstJSON=%5B%5D&textReferences=false)
 
 ---
 
