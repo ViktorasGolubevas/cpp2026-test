@@ -1,6 +1,5 @@
 #include <stdio.h>
-
-#include "03_ny_stack.h" // +
+#include "stack.h"
 
 void init(void) {
     top = 0;
