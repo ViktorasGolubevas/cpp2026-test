@@ -2,9 +2,9 @@
 
 Šiame etape nagrinėjamas **vienas svarbiausių C kalbos lūžių**:
 
-> **Failas ≠ modulis**
+> ❗**failas ≠ modulis**
 
-> **Deklaracija ≠ apibrėžimas**
+> ❗**aprašas ≠ apibrėžimas**
 
 Tai etapas, kuriame studentai dažniausiai susiduria su _linkerio klaidomis_ ir pradeda jausti, kad C programą sudaro *ne tiesiog "kažkokie" `.c` failai*, o **atskirai kompiliuojami vienetai** (_**separate compilation units**_).
 
