@@ -34,7 +34,7 @@ Tai etapas, kuriame studentai dažniausiai susiduria su *linkerio klaidomis* ir 
 
 ---
 
-## Variantai
+## Bandymai
 
 ### 🟥 `n_nc` – naivus bandymas
 
