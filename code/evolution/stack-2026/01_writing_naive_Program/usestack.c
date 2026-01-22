@@ -47,7 +47,6 @@ int main(void) {
         push(c);
     }
 
-    printf("top=%d\n",top);
     /* Kol stekas netuščias, spausdiname išimdami po simbolį (elementą) */
     while (!isEmpty()) {
         putchar(pop());
@@ -58,10 +57,6 @@ int main(void) {
 }
 
 /*
->gcc 01_n_usestack.c -o 01_n_usestack
+>gcc usestack.c -o usestack
 */
-/*
->01_n_usestack.exe
-123456
-54321
-*/
+
