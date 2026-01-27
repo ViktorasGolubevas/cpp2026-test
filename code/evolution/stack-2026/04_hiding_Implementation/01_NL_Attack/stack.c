@@ -1,5 +1,4 @@
-// #include "03_stack.h"
-#include "04_stack.h"
+#include "stack.h"
 
 #define SIZE 5
 

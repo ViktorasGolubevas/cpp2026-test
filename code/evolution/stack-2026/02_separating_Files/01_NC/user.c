@@ -10,6 +10,20 @@ int main(void) {
     return 0;
 }
 
+// gcc -c stack.c
+// gcc -c user.c
+// gcc stack.o user.o -o app
+
+
+
+
+
+
+
+
+
+
+
 /*
 >gcc 02_n_stack.c 02_nx_user.c -o 02_nx_use_stack
 

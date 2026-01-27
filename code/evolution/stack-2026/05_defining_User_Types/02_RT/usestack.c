@@ -50,19 +50,17 @@ int main(void) {
     while (!isEmpty(st1)) putchar(pop(st1));
 
     putchar('\n');
-    printf("Pabaiga\n");
 
     return 0;
 }
 
 /*
-gcc 05_ny_usestack.c -o 05_ny_usestack
+gcc usestack.c -o usestack
 */
 
 /*
-C:\Repos\Github\ViktorasGolubevas\desktop-tutorial\src\evolution\stackext>05_ny_usestack.exe
+usestack.exe
 123
 
-Pabaiga
 */
 
