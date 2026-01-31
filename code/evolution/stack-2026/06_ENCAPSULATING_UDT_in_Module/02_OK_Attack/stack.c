@@ -1,9 +1,4 @@
-#include "07_n_stack.h"
-
-struct Stack{
-  char stack[SIZE];
-  int top;
-};
+#include "stack.h"
 
 static void reset(struct Stack *pst) {
     pst->top = 0;

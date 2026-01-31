@@ -2,8 +2,6 @@
 
 struct Stack;
 
-struct Stack* create(void);
-void destroy(struct Stack *);
 void init(struct Stack *);
 int isEmpty(struct Stack *);
 int isFull(struct Stack *);

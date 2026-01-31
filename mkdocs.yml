@@ -62,8 +62,9 @@ markdown_extensions:
 nav:
   - 'Pradžia': index.md
   - 'Temos':
-    - 'Nuo C link C++ (Stack): testas': evolution/stack-evoliucija-test.md
+    - 'Nuo C link C++ (Stack) by Claude: 1-9': evolution/Claude_stack_evolution_guide.md
     - 'Nuo C link C++ (Stack): 1-7': evolution/stack-evolution-1.md
+    - 'Nuo C link C++ (Stack): testas': evolution/stack-evoliucija-test.md
     - 'Konceptualūs barjerai': evolution/evoliucija-problemos.md
     - 'Objektų masyvai': evolution/array-evoliucija.md
     - 'Parametrų perdavimas': betterc/ParamPass.md

@@ -1,18 +1,4 @@
-#include <stdlib.h>
-#include "077_stack.h"
-
-struct Stack{
-  char stack[SIZE];
-  int top;
-};
-
-struct Stack* create(void) {
-    return (struct Stack*) calloc(sizeof(struct Stack), 1);
-}
-
-void destroy(struct Stack *pst) {
-    free(pst);
-}
+#include "stack.h"
 
 static void reset(struct Stack *pst) {
     pst->top = 0;
