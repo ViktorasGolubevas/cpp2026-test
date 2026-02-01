@@ -9,28 +9,28 @@
 
 #### 1.1. Iš Monolito į Modulį
 - Programos dekompozicija
-- Kompiliavimo vienetai (`compilation units`)
-- Antraštės/implementacijos atskyrimas (`header`/`implementation`)
+- Kompiliavimo vienetai (*compilation units*)
+- Antraštės/implementacijos atskyrimas (*header*/*implementation*)
 
 #### 1.2. Informacijos slėpimas. Pradžia
 - Statiniai kintamieji (`static`)
 
 #### 1.3. Inkapsuliacija. Pradžia
-- Vartotojo apibrėžti tipai (`User-Defined Types`)
-- Inkapsuliacija (`encapsulation`) C būdu
+- Vartotojo apibrėžti tipai (*User-Defined Types*)
+- Inkapsuliacija (*Encapsulation*) C būdu
 
 #### 1.4. Gyvavimo ciklas 
-- Nepermatomos rodyklės (`opaque pointers`)
+- Nepermatomos rodyklės (*opaque pointers*)
 - Rankinis resursų valdymas
 - RAII. Pradžia
 
-#### 1.5. Pažangios C technikos (Priedas 10A-D)
+#### 1.5. Pažangios C technikos (Priedas 10A-D) - perdaryti
 - Tipų alijavimas (`typedef aliasing`)
 - Konstantiškumo taisyklės (`const correctness`)
 - Funkcijų rodykliai (`function pointers`) polimorfizmui
 - Bendrinio rodyklio technika (`void pointer generics`)
 
-#### 1.6. Šuolis į C++
+#### 1.6. Šuolis į C++ - perdaryti
 - `class` kaip sprendimas
 - `Constructor`/`Destructor` automatizacija
 - `private`/`public` vykdymas kompiliatoriaus lygmenyje
