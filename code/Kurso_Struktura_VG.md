@@ -71,13 +71,13 @@
 - `auto` raktažodis; kada naudoti/nenaudoti
 - `decltype`
 
-#### 3.3. Ciklas su diapazonu (`Range-based loops`)
+#### 3.3. Ciklas su diapazonu (*Range-based loops*)
 - `for (auto& elem : container)`; kada efektyvu
 
 #### 3.4. Nullptr
 - vs `NULL` vs `0`
 
-#### 3.5. Vieninga inicializacija (`Uniform initialization`)
+#### 3.5. Vieninga inicializacija (*Uniform initialization*)
 - Riestinių skliaustų inicializacija `{}`
 - Tiesioginė inicializacija `()`
 
@@ -89,11 +89,11 @@
 - Paviršinio kopijavimo (*shallow copy*) problema
 - Bitinis kopijavimas (*bitwise copy*)
 
-#### 4.2. Kopijavimo konstruktorius (`Copy Constructor`)
+#### 4.2. Kopijavimo konstruktorius (*Copy Constructor*)
 - Kada kviečiamas
 - Giliojo kopijavimo (*deep copy*) implementacija
 
-#### 4.3. Kopijavimo priskyrimo operatorius (`Copy Assignment Operator`)
+#### 4.3. Kopijavimo priskyrimo operatorius (*Copy Assignment Operator*)
 - `operator=` perkrovimas (*overloading*)
 - Savęs priskyrimo patikra (*self-assignment check*)
 - "Kopijuok-ir-keisk" idioma (*copy-and-swap idiom*)
@@ -140,19 +140,19 @@
 
 #### 6.2. Perkėlimo konstruktorius (*Move Constructor*)
 - Kada kviečiamas
-- Resursų "vagystė" (`resource stealing`)
+- Resursų "vagystė" (*resource stealing*)
 - `noexcept`
 
-#### 6.3. Perkėlimo priskyrimo operatorius (`Move Assignment*)
+#### 6.3. Perkėlimo priskyrimo operatorius (*Move Assignment*)
 - "Perkelk-ir-sukeisk" šablonas (*move-and-swap pattern*)
 
-#### 6.4. Penkių taisyklė (`Rule of 5`)
+#### 6.4. Penkių taisyklė (*Rule of 5*)
 - Trijų taisyklė + Perkėlimo operacijos
 - Nulio taisyklė (*Rule of 0*) - kada nereikia nieko
 
 #### 6.5. Išmaniosios rodyklės (*Smart Pointers*)
 - `unique_ptr` (nuosavybė)
-- `shared_ptr` (nuorodų skaičiavimas, `reference counting`)
+- `shared_ptr` (nuorodų skaičiavimas, *reference counting*)
 - `weak_ptr`
 - `make_unique`/`make_shared`
 - **RAII** "tobulumas"
