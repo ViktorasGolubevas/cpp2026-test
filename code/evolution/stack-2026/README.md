@@ -7,11 +7,11 @@
 
 ---
 
-## 🎯 Subdirektorijų Žymėjimai
+## 🤝 Subdirektorijų žymėjimai
 
 | Žymėjimas | Pavadinimas | Aprašymas |
 |-----------|-------------|-----------|
-| **NC** | Not Compiling | Kompiliavimo klaida (syntax/type error) |
+| **NC** | *Not Compiling* | Kompiliavimo klaida (sintaksės klaida, error) |
 | **NL** | Not Linking | Linkavimo klaida (multiple definition/undefined reference) |
 | **OK** | Veikia | Kompiliuojasi ir veikia teisingai |
 | **OK_Attack** | Veikia, bet ataka pavyksta | Demonstruoja saugumo spragą |
