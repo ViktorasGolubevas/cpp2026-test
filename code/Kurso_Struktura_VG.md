@@ -316,4 +316,4 @@ P3 (RAII) ──> P13 (Move) ──> P14 (Smart ptr) ──> P15 (Best practices
 ## VERSIJA
 **Data:** 2026-02-01  
 **Autorius:** Viktoras Golubevas  
-**Statusas:** Patvirtinta struktūra - 15 paskaitų + 10 teminių dalių
+**Statusas:** Preliminari struktūra - 15 paskaitų + 10 teminių dalių
