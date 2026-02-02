@@ -34,7 +34,7 @@
 
 1. **Settings** → **Members**
 2. **Add member**: `[dėstytojo username]`
-3. **Role**: `Reporter` (skaitymo teisės)
+3. **Role**: `Maintainer`
 
 ### **3 žingsnis: Clone repo į savo kompiuterį**
 
@@ -44,6 +44,8 @@ cd cpp-2026
 ```
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## 📁 Projekto struktūra
 
@@ -87,9 +89,11 @@ cpp-2026/                    ← GitLab repo
 |-------|--------|---------|------------|
 | **Projektas** | `/README.md` | Bendras projekto aprašymas, užduočių būsena | ✅ TAIP |
 | **Užduotis** | `/U1/README.md` | Užduoties santrauka, testavimas, pastabos | ✅ TAIP |
-| **Žingsnis** | `/U1/01/README.md` | *Nebūtina* (tik jei norite) | ❌ NE |
+| **Žingsnis** | `/U1/01/README.md` | *Nebūtina* | ❌ NE |
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## 🔄 Užduoties atlikimo workflow
 
@@ -117,6 +121,8 @@ cpp-2026/                    ← GitLab repo
 10. Pateikti Moodle
 ```
 
+<div style="page-break-after: always;"></div>
+
 ### **Detalus pavyzdys (U1):**
 
 #### **Žingsnis 1: Sukurti direktorijas**
@@ -126,7 +132,7 @@ cd cpp-2026
 mkdir -p U1/01 U1/02 U1/03 U1/04 U1/05
 ```
 
-#### **Žingsnis 2: Atlikti 1 žingsnį**
+#### **Žingsnis 2: Atlikti užduoties U1 1 žingsnį**
 
 ```bash
 cd U1/01
@@ -144,7 +150,7 @@ git commit -m "U1: 1 žingsnis - Hello World ir masyvų įvestis"
 git push
 ```
 
-#### **Žingsnis 4: Tęsti su 2 žingsniu**
+#### **Žingsnis 4: Atlikti užduoties U1 2 žingsnį**
 
 ```bash
 cd ../02
@@ -157,17 +163,19 @@ git commit -m "U1: 2 žingsnis - Bubble sort funkcija"
 git push
 ```
 
-#### **Žingsnis 5: Po visų žingsnių - README**
+#### **Žingsnis 5: Po visų žingsnių - užduoties README**
 
 ```bash
 cd U1
-# Sukurti README.md (žr. šabloną žemiau)
+# Sukurti README.md (žr. šabloną ...)
 git add README.md
 git commit -m "U1: Užduoties README"
 git push
 ```
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## 📝 Git commit'ų gairės
 
@@ -218,6 +226,8 @@ Pavyzdžiai:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ## 📄 README.md reikalavimai
 
 ### **1. Projekto README (`/README.md`)** - PRIVALOMAS
@@ -264,13 +274,7 @@ make
 
 ---
 
-## 📝 Pastabos
-
-- Commit'ai daroma po kiekvieno žingsnio
-- Jei klausimai - rašyti dėstytojui
-```
-
----
+<div style="page-break-after: always;"></div>
 
 ### **2. Užduoties README (`/U1/README.md`)** - PRIVALOMAS
 
@@ -280,7 +284,7 @@ make
 # U1: C++ Primityvai ir Funkcijų Moduliai
 
 **Būsena**: ✅ Atlikta  
-**Pateikta**: 2026-02-13
+**Pateikta**: 2026-XX-XX
 
 ---
 
@@ -299,18 +303,20 @@ make
 ## 🧪 Testavimas
 
 **Testas 1 (skaičiai)**:
-```
+```bash
 Input: 42 17 99 5 0
 Output: 5 17 42 99
+```bash
 ✅ VEIKIA
-```
+
 
 **Testas 2 (žodžiai)**:
-```
+```bash
 Input: obuolys bananas citrina -
 Output: bananas citrina obuolys
+```bash
 ✅ VEIKIA
-```
+
 
 ---
 
@@ -324,8 +330,6 @@ Output: bananas citrina obuolys
 
 ## ⚠️ Problemos (jei buvo)
 
-*(Neprivaloma, bet naudinga)*
-
 **Problema 1**: Makefile TAB vs spaces  
 **Sprendimas**: Pakeisti spaces į TAB simbolius
 
@@ -338,7 +342,8 @@ cd 05/
 make
 ./programa
 ```
-```
+
+---
 
 **Minimumas** (jei tingite):
 - ✅ Žingsnių lentelė
@@ -349,9 +354,11 @@ make
 
 ### **3. Žingsnio README (`/U1/01/README.md`)** - NEPRIVALOMAS
 
-Jei **tikrai** norite, galite pridėti trumpas pastabas kiekviename žingsnyje, bet **ne būtina**!
+Jei norite, galite pridėti trumpas pastabas kiekviename žingsnyje!
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## 📦 Pateikimas Moodle
 
@@ -436,48 +443,7 @@ Pavyzdžiai:
 
 ---
 
-## ✅ Vertinimas
-
-### **Kas vertinama:**
-
-| Kriterijus | % |
-|------------|---|
-| **Programos funkcionalumas** | 50% |
-| ├─ Programa kompiliuojasi be klaidų | 15% |
-| ├─ Teisingai atlieka užduotį | 25% |
-| └─ Testai praeina | 10% |
-| **Kodo kokybė** | 30% |
-| ├─ Aiškūs komentarai | 10% |
-| ├─ Modulinė struktūra | 10% |
-| └─ Geros praktikos (header guards, const, etc.) | 10% |
-| **Git ir dokumentacija** | 20% |
-| ├─ Commit'ų kokybė | 10% |
-| └─ README.md kokybė | 10% |
-| **TOTAL** | **100%** |
-
----
-
-### **Commit'ų vertinimas:**
-
-| Commit stilius | Balai |
-|----------------|-------|
-| Po kiekvieno žingsnio, aprašomieji pranešimai | 100% |
-| Keli commit'ai, bet ne visi žingsniai | 70% |
-| Vienas commit "U1 done" | 30% |
-| Nėra commit'ų / tik vienas pradinis | 0% |
-
----
-
-### **README.md vertinimas:**
-
-| README kokybė | Balai |
-|---------------|-------|
-| Pilnas (žingsniai, testai, įžvalgos) | 100% |
-| Minimalus (tik žingsniai + testai) | 70% |
-| Tik failų sąrašas | 40% |
-| Tuščias arba nėra | 0% |
-
----
+<div style="page-break-after: always;"></div>
 
 ## ❓ DUK
 
@@ -602,7 +568,7 @@ git clone https://gitlab.mif.vu.lt/[username]/cpp-2026.git
 
 Bet galite:
 - ✅ Diskutuoti idėjas
-- ✅ Padėti debug'inti (ne duoti kodo!)
+- ✅ Padėti debug'inti (neduoti kodo!)
 - ❌ Kopijuoti kodą (plagiatas!)
 
 ---
@@ -616,37 +582,26 @@ Bet galite:
 - **U4-U7**: 5-8 valandos
 - **U8-U9**: 8-12 valandų (projektas)
 
-**Patariu**: Pradėti **anksčiau**, ne laukti paskutinės dienos! 😊
+**Patariu**: Pradėti **anksčiau**, nelaukti paskutinės dienos! 😊
 
 ---
 
-### **K: Kam kreiptis pagalbos?**
+### **K: Į ką kreiptis pagalbos?**
 
 **A:**
 1. **Pirmiausia**: Perskaityti užduoties aprašymą (U1.md, U2.md, ...)
 2. **Antra**: Pažiūrėti Stack Overflow, cppreference.com
-3. **Trečia**: Klausti dėstytojo (Moodle arba email)
-4. **Paskutinis būdas**: Klausti kolegos (bet **ne kopijuoti** kodą!)
+3. **Trečia**: Klausti dėstytojo (auditorijoje, Teams arba email)
+4. **Paskutinis būdas**: Klausti kolegos (bet **ne kopijuoti** kodo!)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## 🔗 Naudingos nuorodos
 
 - **GitLab dokumentacija**: https://docs.gitlab.com/
 - **Git tutorial**: https://git-scm.com/book/en/v2
 - **Markdown sintaksė**: https://www.markdownguide.org/
-- **C++ reference**: https://en.cppreference.com/
 - **Makefile tutorial**: https://makefiletutorial.com/
 
----
-
-## 📞 Kontaktai
-
-**Dėstytojas**: [Vardas Pavardė]  
-**Email**: [email@mif.vu.lt]  
-**Konsultacijos**: [Laikas ir vieta]  
-**Moodle**: [Nuoroda]
-
----
-
-**Sėkmės!** 🚀
