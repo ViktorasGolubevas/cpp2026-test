@@ -23,8 +23,8 @@
 
 ### **1 žingsnis: Sukurti repo GitLab'e**
 
-1. Eikite į fakulteto GitLab: `https://gitlab.mif.vu.lt`
-2. Prisijunkite su VU kredencialais
+1. Eikite į fakulteto GitLab: `https://git.mif.vu.lt`
+2. Prisijunkite su MIF (!) kredencialais
 3. Sukurkite **naują projektą**:
    - **Project name**: `cpp-2026`
    - **Visibility**: `Private` (svarbu!)
