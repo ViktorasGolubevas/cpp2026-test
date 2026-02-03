@@ -95,21 +95,6 @@ int main() {
     int a=1, b=2;
     swap_cpp(a, b); // a=2, b=1
 }
+
 ```
-```
 
-### Kodėl padariau būtent taip?
-
-1.  **Struktūra:** Išskaidžiau tą didelę lentelę į atskiras temas. Pirmakursiai pameta dėmesį, jei skaidrėje per daug kodo.
-2.  **„Live“ elementai:** Įdėjau nuorodą į **Python Tutor** prie pointerių dalies.
-    *   *Kodėl?* Jūsų PDF'e buvo tekstas „*parametrų-reikšmių tipus padarome rodykliniais...*“. Tai labai sunkus sakinys. Python Tutor parodys rodyklę (arrow) grafiškai – tai pakeičia 10 minučių aiškinimo.
-3.  **Lentelė:** Paskutinėje skaidrėje (`Apibendrinimas`) panaudojau Markdown lentelę, kuri atstoja jūsų Word lentelę, bet yra švaresnė. Išėmiau pilną kodo realizaciją iš lentelės (nes ji jau buvo aptarta anksčiau), palikau tik esminius skirtumus (sintaksę).
-
-### Kaip tai pateikti auditorijai?
-
-1.  Parodote **1 skaidrę** (Value). Klausiate: „Kodėl `a` ir `b` nepasikeitė?“.
-2.  Parodote **2 skaidrę** (Pointer). Paspaudžiate nuorodą į *Python Tutor*. Parodote, kaip rodyklė nukreipta į `a`.
-3.  Parodote **3 skaidrę** (Reference). Akcentuojate: „Tai veikia taip pat kaip pointeris, bet atrodo gražiai“.
-4.  Parodote **4 skaidrę** (Lentelę). Tai jūsų „Cheat Sheet“ studentams.
-
-Tai puikus pavyzdys, kaip 25 metų senumo teisingą inžinerinę mintį perkelti į 2024-ųjų formatą.
