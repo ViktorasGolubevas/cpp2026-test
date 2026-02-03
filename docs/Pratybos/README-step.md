@@ -1,6 +1,6 @@
 # U[N]: Žingsnis [N] - [Pavadinimas]
 
-**PASTABA:** Šis failas **neprivalomas** - tik jei norite detalių pastabų.
+**PASTABA:** Šis failas *neprivalomas*, jei užduoties žingsnių atlikimas pakankamai dokumentuotas užduoties README. Tiesiog - pasibandykite!
 
 ---
 
@@ -8,7 +8,7 @@
 
 - [x] [Užduotis 1]
 - [x] [Užduotis 2]
-- [ ] [Užduotis 3] (optional)
+- [ ] [Užduotis 3]
 
 ---
 

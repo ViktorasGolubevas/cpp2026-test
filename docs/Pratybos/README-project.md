@@ -1,4 +1,4 @@
-# C++ Objektinis Programavimas (2026)
+# Objektinis Programavimas C++ (2026)
 
 **Studentas:** [Vardas Pavardė]  
 **Grupė:** [Grupės numeris]  
@@ -51,6 +51,8 @@ make
 
 ## 📝 Pastabos
 
-- Commit'ai daroma po kiekvieno žingsnio
-- Klausimai → dėstytojui
-- Detalesnė info → [UzduotiuGidas.md](UzduotiuGidas.md)
+- Commit'ai daromi po kiekvieno žingsnio
+
+
+## Klausimai dėstytojui
+

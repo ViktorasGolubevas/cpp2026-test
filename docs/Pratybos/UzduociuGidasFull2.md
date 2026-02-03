@@ -14,8 +14,7 @@
 4. [Git commit'ų gairės](#-git-commitų-gairės)
 5. [README.md reikalavimai](#-readmemd-reikalavimai)
 6. [Pateikimas Moodle](#-pateikimas-moodle)
-7. [Vertinimas](#-vertinimas)
-8. [DUK](#-duk)
+7. [DUK](#-duk)
 
 ---
 
@@ -230,131 +229,47 @@ Pavyzdžiai:
 
 ## 📄 README.md reikalavimai
 
+Kiekvienas lygis turi savo šabloną (`README-templates/` direktorijoje). Nukopijuokite šabloną į reikiamą vieta ir užpildykite savo duomenys.
+
+| Lygis | Failas | Šablonas | Privaloma? |
+|-------|--------|----------|------------|
+| Projektas | `/README.md` | `README-project.md` | ✅ TAIP |
+| Užduotis | `/U1/README.md` | `README-assignment.md` | ✅ TAIP |
+| Žingsnis | `/U1/01/README.md` | `README-step.md` | ❌ NE |
+
+---
+
 ### **1. Projekto README (`/README.md`)** - PRIVALOMAS
 
-**Šablonas:**
+Šablonas: `README-project.md`
 
-```markdown
-# C++ Objektinis Programavimas (2026)
-
-**Studentas**: Vardas Pavardė  
-**Grupė**: XXXXXX  
-**GitLab**: https://gitlab.mif.vu.lt/[username]/cpp-2026
+Turi:
+- Studentas: vardas, pavardė, grupė, GitLab URL
+- Projekto struktūra (direktorijų sąrašas)
+- Užduočių būsenos lentelė (atnaujinti po kiekvienos pateiktos užduoties)
 
 ---
-
-## 📁 Projekto struktūra
-
-- **U1/** - C++ primityvai ir funkcijų moduliai
-- **U2/** - IntList klasė (RAII)
-- **U3/** - Kompozicija (Langas/Kambarys)
-- *(bus papildoma...)*
-
----
-
-## ✅ Užduočių būsena
-
-| Užduotis | Būsena | Terminas | Pateikta |
-|----------|--------|----------|----------|
-| U1 | ✅ Atlikta | 2026-02-14 | 2026-02-13 |
-| U2 | 🔄 Vykdoma | 2026-02-28 | - |
-| U3 | ⏳ Laukia | 2026-03-14 | - |
-
----
-
-## 🛠️ Kompiliavimas
-
-Kiekviena užduotis turi savo Makefile:
-
-```bash
-cd U1/05/
-make
-./programa
-```
-
----
-
-<div style="page-break-after: always;"></div>
 
 ### **2. Užduoties README (`/U1/README.md`)** - PRIVALOMAS
 
-**Šablonas:**
+Šablonas: `README-assignment.md`
 
-```markdown
-# U1: C++ Primityvai ir Funkcijų Moduliai
+Turi:
+- Žingsnių lentelė su aprašymais ir būsenomis
+- Bent 1-2 testai (Input/Output formatu)
+- Kompiliavimo instrukcijos (`make` arba `g++`)
 
-**Būsena**: ✅ Atlikta  
-**Pateikta**: 2026-XX-XX
-
----
-
-## 📝 Žingsniai
-
-| Žingsnis | Direktorija | Aprašymas |
-|----------|-------------|-----------|
-| 1 | `01/` | Hello World + masyvas |
-| 2 | `02/` | Bubble sort funkcija |
-| 3 | `03/` | Modulinė struktūra (.h/.cpp) |
-| 4 | `04/` | array → vector<int> |
-| 5 | `05/` | vector<int> → vector<string> |
-
----
-
-## 🧪 Testavimas
-
-**Testas 1 (skaičiai)**:
-```bash
-Input: 42 17 99 5 0
-Output: 5 17 42 99
-```bash
-✅ VEIKIA
-
-
-**Testas 2 (žodžiai)**:
-```bash
-Input: obuolys bananas citrina -
-Output: bananas citrina obuolys
-```bash
-✅ VEIKIA
-
-
----
-
-## 💭 Pagrindinės įžvalgos
-
-1. Modulinė struktūra - `.h`/.`cpp` separacija patogu
-2. Vector daug lankstesnis už masyvą (dinaminis dydis)
-3. Tas pats algoritmas veikia su int ir string!
-
----
-
-## ⚠️ Problemos (jei buvo)
-
-**Problema 1**: Makefile TAB vs spaces  
-**Sprendimas**: Pakeisti spaces į TAB simbolius
-
----
-
-## 📦 Kompiliavimas
-
-```bash
-cd 05/
-make
-./programa
-```
-
----
-
-**Minimumas** (jei tingite):
-- ✅ Žingsnių lentelė
-- ✅ Bent 1-2 testai
-- ✅ Kompiliavimo instrukcijos
+Rekomenduojama papildyti:
+- Įžvalgos (ką naujo išmokote)
+- Problemos ir jų sprendimai
 
 ---
 
 ### **3. Žingsnio README (`/U1/01/README.md`)** - NEPRIVALOMAS
 
-Jei norite, galite pridėti trumpas pastabas kiekviename žingsnyje!
+Šablonas: `README-step.md`
+
+Trumpos pastabos per žingsniui — naudingia debug'inimo metu, bet neprivaloma.
 
 ---
 
@@ -447,44 +362,12 @@ Pavyzdžiai:
 
 ## ❓ DUK
 
-### **K: Ar galiu naudoti branch'us vietoj subdirektorijų?**
-
-**A:** Taip, **galite**, bet **neprivaloma**. 
-
-**Pavyzdys su branch'ais:**
-```bash
-git checkout -b u1-step1
-# ... darbas ...
-git commit -m "U1: 1 žingsnis"
-
-git checkout -b u1-step2
-# ... darbas ...
-git commit -m "U1: 2 žingsnis"
-
-# Galutinis merge į main
-git checkout main
-git merge u1-step5
-```
-
-**Bet** subdirektorijos (`01/`, `02/`, ...) **paprastesnės** ir **labiau atitinka paskaitų medžiagą** (Stack Evolution stilius).
-
----
-
-### **K: Ar reikia Makefile kiekviename žingsnyje?**
-
-**A:** Ne, **tik nuo 3 žingsnio** (kai turite kelis `.cpp` failus).
-
-- Žingsniai 1-2: `g++ main.cpp -o programa` pakanka
-- Žingsniai 3-5: **Makefile rekomenduojamas** (daug failų)
-
----
-
 ### **K: Ar galiu naudoti IDE (VS Code, CLion)?**
 
 **A:** Taip, **bet**:
-- ✅ **Įtraukite `.gitignore`** ignoruoti IDE failus
-- ✅ **Programa turi kompiliuotis su Makefile** (ne tik IDE)
-- ❌ **Neįtraukite** `.vscode/`, `.idea/` į repo
+- ✅ Įtraukite `.gitignore` ignoruoti IDE failus
+- ✅ Programa turi kompiliuotis iš komandinės eilutės (ne tik IDE)
+- ❌ Neįtraukite `.vscode/`, `.idea/` į repo
 
 ---
 
@@ -493,72 +376,13 @@ git merge u1-step5
 **A:** Commit'inkite dabar!
 
 ```bash
-# Jei jau padarėte kelis žingsnius be commit'ų:
 git add U1/01/
 git commit -m "U1: 1 žingsnis (late commit)"
-
 git add U1/02/
 git commit -m "U1: 2 žingsnis (late commit)"
 ```
 
-**Geriau vėliau nei niekada!** Bet **ateityje** commit'inkite **dažnai**.
-
----
-
-### **K: Ar senasis kodas turi būti užkomentuotas ar ištrinti?**
-
-**A:** Priklauso nuo užduoties:
-
-- **U1**: Užkomentuoti (žr. U1.md reikalavimus)
-- **U2-U9**: **Ištrinti** (senasis kodas - tai praeitų žingsnių direktorijos)
-
-**Git saugo visą istoriją**, todėl galite ištrinti seną kodą - jis vis tiek matomas commit'uose!
-
----
-
-### **K: Ar `.gitignore` privalomas?**
-
-**A:** **Taip!** Įtraukite šį minimalų `.gitignore`:
-
-```gitignore
-# Compiled files
-*.o
-*.out
-programa
-a.out
-
-# Editor files
-*~
-.vscode/
-.idea/
-*.swp
-
-# OS files
-.DS_Store
-Thumbs.db
-```
-
----
-
-### **K: Ką daryti, jei GitLab "permission denied"?**
-
-**A:** Patikrinkite SSH raktus:
-
-```bash
-# Sugeneruoti SSH raktą (jei neturite)
-ssh-keygen -t ed25519 -C "your.email@mif.vu.lt"
-
-# Nukopijuoti public key
-cat ~/.ssh/id_ed25519.pub
-
-# Įtraukti į GitLab:
-# Settings → SSH Keys → Add key
-```
-
-Arba naudokite HTTPS:
-```bash
-git clone https://gitlab.mif.vu.lt/[username]/cpp-2026.git
-```
+Geriau vėliau nei niekada! Bet ateityje commit'inkite po kiekvieno žingsnio.
 
 ---
 
@@ -582,17 +406,17 @@ Bet galite:
 - **U4-U7**: 5-8 valandos
 - **U8-U9**: 8-12 valandų (projektas)
 
-**Patariu**: Pradėti **anksčiau**, nelaukti paskutinės dienos! 😊
+Pradėti **anksčiau**, nelaukti paskutinės dienos! 😊
 
 ---
 
 ### **K: Į ką kreiptis pagalbos?**
 
 **A:**
-1. **Pirmiausia**: Perskaityti užduoties aprašymą (U1.md, U2.md, ...)
-2. **Antra**: Pažiūrėti Stack Overflow, cppreference.com
-3. **Trečia**: Klausti dėstytojo (auditorijoje, Teams arba email)
-4. **Paskutinis būdas**: Klausti kolegos (bet **ne kopijuoti** kodo!)
+1. Perskaityti užduoties aprašymą (U1.md, U2.md, ...)
+2. Pažiūrėti Stack Overflow, cppreference.com
+3. Klausti dėstytojo (auditorijoje, Teams arba email)
+4. Klausti kolegos (bet **ne kopijuoti** kodo!)
 
 ---
 
