@@ -1,11 +1,11 @@
-# OBJEKTINIS PROGRAMAVIMAS C++
-## Kurso struktūra ir teminės dalys
+# OBJEKTINIS PROGRAMAVIMAS C++, 2026
+## Kurso struktūra: Teminiai skyriai -> Paskaitos
 
 ---
 
-## TEMINĖ STRUKTŪRA (Content Map)
+## TEMINIAI SKYRIAI (TEMINĖ STRUKTŪRA)
 
-### 1 DALIS: EVOLIUCIJA. Nuo C iki Modern C++
+### 1 skyrius. EVOLIUCIJA: Nuo C iki Modern C++
 
 #### 1.1. Iš Monolito į Modulį
 - Programos dekompozicija
@@ -37,7 +37,7 @@
 
 ---
 
-### 2 DALIS: KLASĖS ANATOMIJA
+### 2 skyrius. KLASĖS ANATOMIJA
 
 #### 2.1. KLASĖS pagrindai
 - `struct` vs `class`
@@ -59,7 +59,7 @@
 
 ---
 
-### 3 DALIS: GERESNIS C
+### 3 skyrius. GERESNIS C
 
 #### 3.1. Nuorodos (*References*)
 - *lvalue* nuorodos
@@ -83,7 +83,7 @@
 
 ---
 
-### 4 DALIS: KOPIJAVIMO SEMANTIKA
+### 4 skyrius. KOPIJAVIMO SEMANTIKA
 
 #### 4.1. Numatytasis kopijavimo elgesys
 - Paviršinio kopijavimo (*shallow copy*) problema
@@ -104,7 +104,7 @@
 
 ---
 
-### 5 DALIS : OOP PRINCIPAI (4 kolonos)
+### 5 skyrius. OOP PRINCIPAI (4 kolonos)
 
 #### 5.1. Inkapsuliacija (*Encapsulation*)
 - Apibendrinimas iš Klasės anatomijos
@@ -131,7 +131,7 @@
 
 ---
 
-### 6 DALIS: MODERNUSIS C++ (C++11/14/17)
+### 6 skyrius. MODERN C++ (C++11/14/17/20/23/26)
 
 #### 6.1. rvalue nuorodos
 - *lvalue* vs *rvalue*
@@ -159,7 +159,7 @@
 
 ---
 
-### 7 DALIS: OPERATORIŲ PERKROVIMAS
+### 7 skyrius. OPERATORIŲ PERKROVIMAS
 
 #### 7.1. Aritmetiniai operatoriai
 - `+`, `-`, `*`, `/` kaip narys/draugas (`member`/`friend`)
@@ -181,7 +181,7 @@
 
 ---
 
-### 8 DALIS: ŠABLONŲ PAGRINDAI
+### 8 skyrius. ŠABLONŲ PAGRINDAI
 
 #### 8.1. Funkcijų šablonai (*Function templates*)
 - Šablono sintaksė (`template` syntax)
@@ -195,7 +195,7 @@
 
 ---
 
-### 9 DALIS: STL PAGRINDAI
+### 9 skyrius. STL PAGRINDAI
 
 #### 9.1. Konteinerių pagrindai
 - `std::array` (fiksuoto dydžio)
@@ -221,7 +221,7 @@
 
 ---
 
-### 10 DALIS: IŠIMČIŲ APDOROJIMAS
+### 10 skyrius. IŠIMČIŲ APDOROJIMAS
 
 #### 10.1. `try`/`catch`/`throw`
 - Išimčių sklidimas (*exception propagation*)
@@ -239,7 +239,7 @@
 
 ---
 
-## PASKAITŲ PROJEKCIJA Į TEMINES DALIS
+## PASKAITŲ PROJEKCIJA Į TEMINES DALIS (siekiamybė 🚀)
 
 | # | Paskaitos pavadinimas | Objektas | Teminės dalys | Fokusas |
 |---|---|---|---|---|
@@ -316,4 +316,4 @@ P3 (RAII) ──> P13 (Move) ──> P14 (Smart ptr) ──> P15 (Best practices
 ## VERSIJA
 **Data:** 2026-02-01  
 **Autorius:** Viktoras Golubevas  
-**Statusas:** Preliminari struktūra - 15 paskaitų + 10 teminių dalių
+**Statusas:** Preliminari struktūra: 13-15 paskaitų iš 10 teminių skyrių
