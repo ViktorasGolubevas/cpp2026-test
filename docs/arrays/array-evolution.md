@@ -27,37 +27,35 @@
 ### Problema
 
 ???+ example "Bandome sukurti objektų masyvą (atviras)"
-
-```cpp
-
+    
+    ```cpp
     --8<-- "code/arrays/01_c_arrays/student.cpp:15:30"
-```
-  
+    ```
+    
     ❌ **Problema**: `Student students[3]` kviečia tik default konstruktorių!
 
-??? info "Pilnas kodas (išskleisti)"
-
-```cpp
-
+??? info "Pilnas kodas (click to expand)"
+    
+    ```cpp
     --8<-- "code/arrays/01_c_arrays/student.cpp"
-```
+    ```
 
 ### Kas blogai?
 
 === "Sukuriame"
-
-```cpp
+    
+    ```cpp
     Student students[3];  // Visi "Unknown", age=0, grade=0.0
-```
+    ```
 
 === "Reikia rankiniu būdu keisti"
-
-```cpp
+    
+    ```cpp
     strcpy(students[0].name, "Jonas");
     students[0].age = 20;
     students[0].grade = 8.5;
     // ... ir taip kiekvienam!
-```
+    ```
 
 ### 💡 Key Takeaway
 
@@ -71,18 +69,18 @@
 ### Sprendimas
 
 ???+ example "C++11 inicializacijos sąrašas (atviras)"
-
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/02_init_list/student.cpp:40:45"
-```
+    ```
     
     ✅ Galime naudoti parametrinius konstruktorius!
 
 ??? info "Pilnas kodas"
-
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/02_init_list/student.cpp"
-```
+    ```
 
 ### Kas pagerėjo?
 
@@ -110,33 +108,37 @@
 ### Runtime dydis
 
 ???+ example "Dinaminis masyvas su new[] (atviras)"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/03_dynamic/student.cpp:50:65"
-```
+    ```
     
     ✅ Galime keisti dydį runtime  
     ❌ Bet reikia `delete[]` - memory leak rizika!
 
 ??? info "Pilnas kodas"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/03_dynamic/student.cpp"
-```
+    ```
 
 ### Problemos
 
 === "Memory leak"
-```cpp
+    
+    ```cpp
     Student* students = new Student[size];
     // ... naudojame ...
     // Pamiršome delete[] students; 💥
-```
+    ```
 
 === "Shallow copy"
-```cpp
+    
+    ```cpp
     StudentManager m1(10);
     StudentManager m2 = m1;  // 💥 Abu rodo į tą patį masyvą
     // Sunaikinus - double delete!
-```
+    ```
 
 ### 💡 Key Takeaway
 
@@ -150,16 +152,18 @@
 ### Deep copy saugumas
 
 ???+ example "Rule of Three implementacija (atviras)"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/04_rule_of_three/student.cpp:40:75"
-```
+    ```
     
     ✅ Destruktorius, Copy konstruktorius, Assignment operatorius
 
 ??? info "Pilnas kodas"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/04_rule_of_three/student.cpp"
-```
+    ```
 
 ### Rule of Three
 
@@ -170,6 +174,7 @@
 | **Assignment operatorius** | Deep copy priskyrimas |
 
 ### Self-assignment apsauga
+
 ```cpp
 StudentManager& operator=(const StudentManager& other) {
     if (this == &other) return *this;  // ← SVARBU!
@@ -189,23 +194,26 @@ StudentManager& operator=(const StudentManager& other) {
 ### Polimorfizmas
 
 ???+ danger "Object slicing problema (atviras)"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/05_pointers/demo.cpp:40:50"
-```
+    ```
     
     ❌ `GraduateStudent` "nupjaunamas" → lieka tik `Student`!
 
 ???+ success "Teisingas būdas - rodyklių masyvas"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/05_pointers/demo.cpp:70:80"
-```
+    ```
     
     ✅ Polimorfizmas veikia su rodyklėmis!
 
 ??? info "Pilnas kodas"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/05_pointers/demo.cpp"
-```
+    ```
 
 ### Palyginimas
 
@@ -227,39 +235,44 @@ StudentManager& operator=(const StudentManager& other) {
 ### Saugus C masyvas
 
 ???+ example "std::array su inicializacija (atviras)"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/06_std_array/demo.cpp:20:35"
-```
+    ```
     
     ✅ STL funkcionalumas + compile-time dydis
 
 ??? info "Pilnas kodas"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/06_std_array/demo.cpp"
-```
+    ```
 
 ### Privalumai
 
 === "Saugi prieiga"
-```cpp
+    
+    ```cpp
     students.at(2).print();  // ✅ Su bounds checking
     // students.at(10);      // ❌ Metus exception
-```
+    ```
 
 === "STL algoritmai"
-```cpp
+    
+    ```cpp
     std::sort(students.begin(), students.end());
     
     auto it = std::find_if(students.begin(), students.end(),
         [](const Student& s) { return s.get_grade() > 8.7; });
-```
+    ```
 
 === "Range-based for"
-```cpp
+    
+    ```cpp
     for (const auto& student : students) {
         student.print();
     }
-```
+    ```
 
 ### C masyvas vs std::array
 
@@ -282,39 +295,45 @@ StudentManager& operator=(const StudentManager& other) {
 ### Dinaminis + RAII + STL
 
 ???+ example "std::vector - dažniausiai naudojamas! (atviras)"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/07_std_vector/demo.cpp:15:30"
-```
+    ```
     
     ✅ Dinaminis dydis + automatinis atminties valdymas!
 
 ??? info "Pilnas kodas"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/07_std_vector/demo.cpp"
-```
+    ```
 
 ### Operacijos
 
 === "Pridėjimas"
-```cpp
+    
+    ```cpp
     students.push_back(Student("Jonas", 20, 8.5));  // Copy
     students.emplace_back("Petras", 21, 9.0);       // In-place
-```
+    ```
 
 === "Šalinimas"
-```cpp
+    
+    ```cpp
     students.erase(students.begin() + 2);  // Šalina 3-čią
     students.pop_back();                    // Šalina paskutinį
-```
+    ```
 
 === "Dydžio keitimas"
-```cpp
+    
+    ```cpp
     students.resize(10);     // Prideda default objektus
     students.reserve(100);   // Rezervuoja vietą
     students.shrink_to_fit(); // Optimizuoja atmintį
-```
+    ```
 
 ### Capacity vs Size
+
 ```cpp
 std::vector<Student> students;
 students.reserve(10);           // capacity = 10, size = 0
@@ -335,41 +354,45 @@ students.emplace_back(...);     // capacity = 10, size = 2
 ### Modern C++ polimorfizmas
 
 ???+ success "unique_ptr su polimorfizmu (atviras)"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/08_smart_ptr/demo.cpp:20:40"
-```
+    ```
     
     ✅ Polimorfizmas + automatinis cleanup + RAII!
 
 ??? info "Pilnas kodas"
-```cpp
+    
+    ```cpp
     --8<-- "code/arrays/08_smart_ptr/demo.cpp"
-```
+    ```
 
 ### Smart pointer tipai
 
 === "unique_ptr"
-```cpp
+    
+    ```cpp
     std::vector<std::unique_ptr<Student>> students;
     students.push_back(std::make_unique<Student>("A", 20, 8.0));
     students.push_back(std::make_unique<GraduateStudent>("B", 25, 9.0, "AI"));
     
     // Automatinis cleanup!
-```
+    ```
     
     ✅ Vienasmenė ownership  
     ✅ Zero overhead  
     ✅ Move-only
 
 === "shared_ptr"
-```cpp
+    
+    ```cpp
     auto student = std::make_shared<Student>("Jonas", 20, 8.5);
     
     group1.push_back(student);  // use_count = 2
     group2.push_back(student);  // use_count = 3
     
     // Sunaikinamas kai use_count = 0
-```
+    ```
     
     ✅ Bendras ownership  
     ✅ Reference counting  
@@ -393,6 +416,7 @@ students.emplace_back(...);     // capacity = 10, size = 2
 ## 📊 Galutinė santrauka
 
 ### Kada ką naudoti?
+
 ```mermaid
 graph TD
     A[Reikia objektų masyvo?] --> B{Žinomas dydis?}
@@ -422,7 +446,8 @@ graph TD
 ### Dažniausios klaidos
 
 ??? danger "1. Object Slicing"
-```cpp
+    
+    ```cpp
     // ❌ BLOGAI
     Student arr[3] = {
         Student("A", 20, 8.0),
@@ -432,10 +457,11 @@ graph TD
     // ✅ GERAI
     std::vector<std::unique_ptr<Student>> arr;
     arr.push_back(std::make_unique<GraduateStudent>(...));
-```
+    ```
 
 ??? danger "2. Memory Leaks"
-```cpp
+    
+    ```cpp
     // ❌ BLOGAI
     Student** arr = new Student*[3];
     arr[0] = new Student(...);
@@ -444,10 +470,11 @@ graph TD
     // ✅ GERAI
     std::vector<std::unique_ptr<Student>> arr;
     // Automatinis cleanup
-```
+    ```
 
 ??? danger "3. Shallow Copy"
-```cpp
+    
+    ```cpp
     // ❌ BLOGAI - be Rule of Three
     class Manager {
         Student* arr;
@@ -458,7 +485,7 @@ graph TD
     class Manager {
         std::vector<Student> arr;  // Auto deep copy
     };
-```
+    ```
 
 ---
 
@@ -475,45 +502,22 @@ graph TD
 ## 📚 Papildoma medžiaga
 
 ??? tip "Nuorodos į detalius README"
+    
     - [Etapas 1 - README](https://github.com/.../code/arrays/01_c_arrays/README.md)
     - [Etapas 4 - README](https://github.com/.../code/arrays/04_rule_of_three/README.md)
     - [Etapas 8 - README](https://github.com/.../code/arrays/08_smart_ptr/README.md)
 
 ??? example "Build'inimo instrukcijos"
-```bash
+    
+    ```bash
     # Vienas failas
     g++ -std=c++17 code/arrays/07_std_vector/demo.cpp -o demo
     
     # Su Makefile
     cd code/arrays/
     make all
-```
+    ```
 
 ---
 
 **Pagrindinė žinutė**: Modern C++ suteikia galingus įrankius objektų masyvų valdymui. **Naudok STL konteinerius ir smart pointers** - jie sprendžia problemas automatiškai ir saugiai! 🚀
-```
-
----
-
-## Kad veiktų - reikia sukurti kodą
-
-### Minimalus code/ setup (8 failai)
-```
-code/arrays/
-├── 01_c_arrays/
-│   └── student.cpp
-├── 02_init_list/
-│   └── student.cpp
-├── 03_dynamic/
-│   └── student.cpp
-├── 04_rule_of_three/
-│   └── student.cpp
-├── 05_pointers/
-│   └── demo.cpp
-├── 06_std_array/
-│   └── demo.cpp
-├── 07_std_vector/
-│   └── demo.cpp
-└── 08_smart_ptr/
-    └── demo.cpp
