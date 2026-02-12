@@ -292,15 +292,15 @@ StudentManager& operator=(const StudentManager& other) {
 
 ## 7️⃣ Etapas 7: STL std::vector
 
-### Dinaminis + RAII + STL
+### Dinaminis + RAII + STL = Paprastumas! 🎉
 
-???+ example "std::vector - dažniausiai naudojamas! (atviras)"
+???+ example "std::vector - paprasčiausias ir galingiausias! (atviras)"
     
     ```cpp
-    --8<-- "code/arrays/07_std_vector/demo.cpp:15:30"
+    --8<-- "code/arrays/07_std_vector/demo.cpp:20:40"
     ```
     
-    ✅ Dinaminis dydis + automatinis atminties valdymas!
+    ✅ Tiesiog veikia! Nereikia `new[]`/`delete[]` - viskas automatiškai!
 
 ??? info "Pilnas kodas"
     
@@ -308,44 +308,129 @@ StudentManager& operator=(const StudentManager& other) {
     --8<-- "code/arrays/07_std_vector/demo.cpp"
     ```
 
-### Operacijos
+### Pagrindas: Tiesiog Pridėk ir Naudok
 
-=== "Pridėjimas"
+=== "Kūrimas ir Pridėjimas"
     
     ```cpp
-    students.push_back(Student("Jonas", 20, 8.5));  // Copy
-    students.emplace_back("Petras", 21, 9.0);       // In-place
+    std::vector<Student> students;  // Tuščias vector
+    
+    // Būdas 1: push_back
+    students.push_back(Student("Jonas", 20, 8.5));
+    
+    // Būdas 2: emplace_back (efektyvesnis!)
+    students.emplace_back("Petras", 21, 9.0);
     ```
 
-=== "Šalinimas"
+=== "Prieiga"
     
     ```cpp
-    students.erase(students.begin() + 2);  // Šalina 3-čią
-    students.pop_back();                    // Šalina paskutinį
+    students[0].print();      // Greita prieiga
+    students.at(0).print();   // Su bounds checking
+    students.front().print(); // Pirmas
+    students.back().print();  // Paskutinis
     ```
 
-=== "Dydžio keitimas"
+=== "Iteravimas"
     
     ```cpp
-    students.resize(10);     // Prideda default objektus
-    students.reserve(100);   // Rezervuoja vietą
-    students.shrink_to_fit(); // Optimizuoja atmintį
+    // Range-based for (REKOMENDUOJAMA!)
+    for (const auto& student : students) {
+        student.print();
+    }
+    
+    // Tradicinis būdas
+    for (size_t i = 0; i < students.size(); i++) {
+        students[i].print();
+    }
     ```
 
-### Capacity vs Size
+### STL Galimybės - Veikia Iš Karto!
+
+=== "Rūšiavimas"
+    
+    ```cpp
+    // Su operator<
+    std::sort(students.begin(), students.end());
+    
+    // Custom lambda comparator
+    std::sort(students.begin(), students.end(),
+        [](const Student& a, const Student& b) {
+            return a.get_grade() > b.get_grade();
+        });
+    ```
+
+=== "Paieška"
+    
+    ```cpp
+    auto found = std::find_if(students.begin(), students.end(),
+                              [](const Student& s) {
+                                  return s.get_grade() > 9.0;
+                              });
+    
+    if (found != students.end()) {
+        found->print();  // Rastas!
+    }
+    ```
+
+=== "Modifikavimas"
+    
+    ```cpp
+    students.insert(students.begin() + 1, newStudent);
+    students.erase(students.begin() + 2);
+    students.clear();  // Išvalo visus
+    ```
+
+### Size vs Capacity - Svarbu Suprasti!
+
+```
+┌───────────────────────────────────────┐
+│ [0] [1] [2] [3] [4] [ ] [ ] [ ]       │
+│ ─────────────────── ───────────       │
+│       size=5         capacity=8       │
+└───────────────────────────────────────┘
+```
 
 ```cpp
 std::vector<Student> students;
 students.reserve(10);           // capacity = 10, size = 0
 students.emplace_back(...);     // capacity = 10, size = 1
 students.emplace_back(...);     // capacity = 10, size = 2
-// ... pridėjus 11-tą ...       // capacity = 20, size = 11
+// ... pridėjus 11-tą ...       // capacity = 20, size = 11 (dvigubėja!)
 ```
+
+**Optimizavimas:** Jei žinote, kiek bus elementų - `reserve()` iš anksto!
+
+### Kodėl vector Yra Geriausias?
+
+✅ **Automatinis atminties valdymas** - nereikia `delete[]`  
+✅ **Dinaminis dydis** - auga automatiškai  
+✅ **STL algoritmai** - `sort`, `find` veikia iš karto  
+✅ **Saugumas** - `at()` tikrina ribas  
+✅ **Efektyvumas** - cache-friendly contiguous memory  
+✅ **Exception-safe** - garantuoja cleanup  
+
+### Lyginant su Ankstesniais Etapais
+
+| Funkcija | C masyvas | std::array | **std::vector** |
+|----------|-----------|------------|-----------------|
+| Dinaminis dydis | ❌ | ❌ | ✅ |
+| Auto cleanup | ❌ | ✅ | ✅ |
+| Bounds checking | ❌ | ✅ `at()` | ✅ `at()` |
+| STL algoritmai | ⚠️ Nepatogiai | ✅ | ✅ |
+| Dydis runtime | ❌ | ❌ | ✅ |
+
+### Kada Naudoti?
+
+✅ **std::vector** → **90% atvejų!** Default pasirinkimas  
+⚠️ **std::array** → Kai dydis žinomas compile-time  
+❌ **C masyvai** → Tik legacy code  
 
 ### 💡 Key Takeaway
 
-> `std::vector` - **default pasirinkimas** objektų masyvams.  
-> Dinaminis + RAII + STL + performance.
+> `std::vector` yra **paprasčiausias** būdas dirbti su dinaminiais masyvais!  
+> **Nereikia rūpintis atminties valdymu** - C++ daro viską automatiškai.  
+> Tiesiog `push_back` / `emplace_back` ir džiaukis! 🎉
 
 ---
 
