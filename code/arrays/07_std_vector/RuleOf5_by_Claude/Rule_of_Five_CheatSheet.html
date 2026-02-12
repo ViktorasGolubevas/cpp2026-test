@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Rule_of_Five_CheatSheet</title>
+  <style>
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+background-color: #1a1a1a;
+border: none;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+</head>
+<body>
+<h1 id="rule-of-five---cheat-sheet">Rule of Five - Cheat Sheet</h1>
+<h2 id="pagrindinė-taisyklė">🎯 Pagrindinė Taisyklė</h2>
+<p><strong>Jei apibrėžiate BENT VIENĄ iš šių funkcijų, turėtumėte
+apibrėžti VISUS PENKIS:</strong></p>
+<ol type="1">
+<li><strong>Destructor</strong> (<code>~ClassName()</code>)</li>
+<li><strong>Copy Constructor</strong>
+(<code>ClassName(const ClassName&amp;)</code>)</li>
+<li><strong>Move Constructor</strong>
+(<code>ClassName(ClassName&amp;&amp;)</code>)</li>
+<li><strong>Copy Assignment</strong>
+(<code>operator=(const ClassName&amp;)</code>)</li>
+<li><strong>Move Assignment</strong>
+(<code>operator=(ClassName&amp;&amp;)</code>)</li>
+</ol>
+<hr />
+<h2 id="sintaksė">📋 Sintaksė</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyClass <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 1. Destructor</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">~</span>MyClass<span class="op">()</span> <span class="op">{</span> <span class="co">/* cleanup */</span> <span class="op">}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 2. Copy Constructor</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">(</span><span class="at">const</span> MyClass<span class="op">&amp;</span> other<span class="op">)</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span> member<span class="op">(</span>other<span class="op">.</span>member<span class="op">)</span> <span class="op">{</span> <span class="op">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 3. Move Constructor</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">(</span>MyClass<span class="op">&amp;&amp;</span> other<span class="op">)</span> <span class="kw">noexcept</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span> member<span class="op">(</span><span class="bu">std::</span>move<span class="op">(</span>other<span class="op">.</span>member<span class="op">))</span> <span class="op">{</span> <span class="op">}</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 4. Copy Assignment</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> MyClass<span class="op">&amp;</span> other<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span><span class="kw">this</span> <span class="op">!=</span> <span class="op">&amp;</span>other<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            member <span class="op">=</span> other<span class="op">.</span>member<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 5. Move Assignment</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span>MyClass<span class="op">&amp;&amp;</span> other<span class="op">)</span> <span class="kw">noexcept</span> <span class="op">{</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span><span class="kw">this</span> <span class="op">!=</span> <span class="op">&amp;</span>other<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            member <span class="op">=</span> <span class="bu">std::</span>move<span class="op">(</span>other<span class="op">.</span>member<span class="op">);</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string member<span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<hr />
+<h2 id="naudojant-default">🚀 Naudojant <code>= default</code></h2>
+<p><strong>Paprasčiausias sprendimas, jei nereikia custom
+logic:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyClass <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">~</span>MyClass<span class="op">()</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">(</span><span class="at">const</span> MyClass<span class="op">&amp;)</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">(</span>MyClass<span class="op">&amp;&amp;)</span> <span class="kw">noexcept</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> MyClass<span class="op">&amp;)</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span>MyClass<span class="op">&amp;&amp;)</span> <span class="kw">noexcept</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<hr />
+<h2 id="naudojant-delete">🚫 Naudojant <code>= delete</code></h2>
+<p><strong>Jei norite uždrausti copy/move:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> NoCopy <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    NoCopy<span class="op">()</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Uždrausti copy</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    NoCopy<span class="op">(</span><span class="at">const</span> NoCopy<span class="op">&amp;)</span> <span class="op">=</span> <span class="kw">delete</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    NoCopy<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> NoCopy<span class="op">&amp;)</span> <span class="op">=</span> <span class="kw">delete</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Leisti move</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    NoCopy<span class="op">(</span>NoCopy<span class="op">&amp;&amp;)</span> <span class="kw">noexcept</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    NoCopy<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span>NoCopy<span class="op">&amp;&amp;)</span> <span class="kw">noexcept</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<hr />
+<h2 id="kodėl-tai-svarbu">⚠️ Kodėl tai svarbu?</h2>
+<h3 id="problema">Problema</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Student <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string name<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    Student<span class="op">(</span><span class="at">const</span> <span class="bu">std::</span>string<span class="op">&amp;</span> n<span class="op">)</span> <span class="op">:</span> name<span class="op">(</span>n<span class="op">)</span> <span class="op">{}</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ❌ Apibrėžėte tik move constructor</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    Student<span class="op">(</span>Student<span class="op">&amp;&amp;</span> other<span class="op">)</span> <span class="kw">noexcept</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span> name<span class="op">(</span><span class="bu">std::</span>move<span class="op">(</span>other<span class="op">.</span>name<span class="op">))</span> <span class="op">{}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ❌ TRŪKSTA: Copy/Move assignment operators</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ NEKOMPILIUOSIS:</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span>Student<span class="op">&gt;</span> students<span class="op">;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>students<span class="op">.</span>emplace_back<span class="op">(</span><span class="st">&quot;Jonas&quot;</span><span class="op">);</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>students<span class="op">.</span>emplace_back<span class="op">(</span><span class="st">&quot;Petras&quot;</span><span class="op">);</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>sort<span class="op">(</span>students<span class="op">.</span>begin<span class="op">(),</span> students<span class="op">.</span>end<span class="op">());</span>  <span class="co">// ERROR!</span></span></code></pre></div>
+<h3 id="sprendimas">Sprendimas</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Student <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string name<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    Student<span class="op">(</span><span class="at">const</span> <span class="bu">std::</span>string<span class="op">&amp;</span> n<span class="op">)</span> <span class="op">:</span> name<span class="op">(</span>n<span class="op">)</span> <span class="op">{}</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    Student<span class="op">(</span>Student<span class="op">&amp;&amp;</span> other<span class="op">)</span> <span class="kw">noexcept</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span> name<span class="op">(</span><span class="bu">std::</span>move<span class="op">(</span>other<span class="op">.</span>name<span class="op">))</span> <span class="op">{}</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ✅ Pridėti trūkstamus operators</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    Student<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> Student<span class="op">&amp;)</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    Student<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span>Student<span class="op">&amp;&amp;)</span> <span class="kw">noexcept</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ Dabar veikia!</span></span></code></pre></div>
+<hr />
+<h2 id="kada-kas-vyksta">📊 Kada kas vyksta?</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Operacija</th>
+<th>Reikalingas Operator</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>MyClass a = b;</code></td>
+<td>Copy Constructor</td>
+</tr>
+<tr class="even">
+<td><code>MyClass a = std::move(b);</code></td>
+<td>Move Constructor</td>
+</tr>
+<tr class="odd">
+<td><code>a = b;</code></td>
+<td>Copy Assignment</td>
+</tr>
+<tr class="even">
+<td><code>a = std::move(b);</code></td>
+<td>Move Assignment</td>
+</tr>
+<tr class="odd">
+<td><code>vector.push_back(obj)</code></td>
+<td>Copy Constructor</td>
+</tr>
+<tr class="even">
+<td><code>vector.push_back(std::move(obj))</code></td>
+<td>Move Constructor</td>
+</tr>
+<tr class="odd">
+<td><code>std::sort(vec.begin(), vec.end())</code></td>
+<td><strong>Copy/Move Assignment</strong></td>
+</tr>
+<tr class="even">
+<td><code>vec.insert(it, obj)</code></td>
+<td><strong>Copy/Move Assignment</strong></td>
+</tr>
+<tr class="odd">
+<td><code>vec.erase(it)</code></td>
+<td><strong>Move Assignment</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="stl-reikalavimai">🎓 STL Reikalavimai</h2>
+<h3 id="stdvector-operacijos-reikalauja"><code>std::vector</code>
+operacijos reikalauja:</h3>
+<p>✅ <strong>Default Constructor</strong> →
+<code>resize(n)</code><br />
+✅ <strong>Copy Constructor</strong> → <code>push_back(obj)</code>,
+<code>insert()</code><br />
+✅ <strong>Move Constructor</strong> →
+<code>push_back(std::move(obj))</code><br />
+✅ <strong>Copy Assignment</strong> → <code>std::sort()</code>,
+<code>std::copy()</code><br />
+✅ <strong>Move Assignment</strong> → <code>std::sort()</code>,
+<code>erase()</code>, <code>insert()</code><br />
+✅ <strong>Destructor</strong> → <code>clear()</code>, vector
+destrukcija</p>
+<hr />
+<h2 id="kodėl-kompiliatorius-ištrina">🔍 Kodėl Kompiliatorius
+Ištrina?</h2>
+<h3 id="c11-taisyklės">C++11 Taisyklės:</h3>
+<ol type="1">
+<li><strong>Jei apibrėžiate move constructor arba move
+assignment:</strong>
+<ul>
+<li>Kompiliatorius <strong>IŠTRINA</strong> copy assignment
+operator</li>
+<li>Kompiliatorius <strong>IŠTRINA</strong> copy constructor
+(nerekomenduojama)</li>
+</ul></li>
+<li><strong>Jei apibrėžiate destructor:</strong>
+<ul>
+<li>Copy/move constructors vis dar generuojami (deprecated)</li>
+<li>Bet geriausia praktika - apibrėžti visus</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="geriausios-praktikos">💡 Geriausios Praktikos</h2>
+<h3 id="jei-galite---naudokite-default">1️⃣ <strong>Jei galite -
+naudokite <code>= default</code></strong></h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>MyClass<span class="op">(</span><span class="at">const</span> MyClass<span class="op">&amp;)</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> MyClass<span class="op">&amp;)</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span></code></pre></div>
+<h3 id="jei-reikia-logging---implementuokite-pilnai">2️⃣ <strong>Jei
+reikia logging - implementuokite pilnai</strong></h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>MyClass<span class="op">(</span><span class="at">const</span> MyClass<span class="op">&amp;</span> other<span class="op">)</span> <span class="op">:</span> data<span class="op">(</span>other<span class="op">.</span>data<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Copy constructor called</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="pridėkite-noexcept-prie-move-operacijų">3️⃣ <strong>Pridėkite
+<code>noexcept</code> prie move operacijų</strong></h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>MyClass<span class="op">(</span>MyClass<span class="op">&amp;&amp;)</span> <span class="kw">noexcept</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span>MyClass<span class="op">&amp;&amp;)</span> <span class="kw">noexcept</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span></code></pre></div>
+<p>Kodėl? <code>std::vector</code> gali naudoti move tik jei garantuoja
+<code>noexcept</code>.</p>
+<h3 id="self-assignment-apsauga">4️⃣ <strong>Self-assignment
+apsauga</strong></h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> MyClass<span class="op">&amp;</span> other<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span><span class="kw">this</span> <span class="op">!=</span> <span class="op">&amp;</span>other<span class="op">)</span> <span class="op">{</span>  <span class="co">// ✅ Būtina!</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">// ... assignment logic</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h2 id="dažniausios-klaidos">🐛 Dažniausios Klaidos</h2>
+<h3 id="pamiršta-noexcept">❌ Pamiršta <code>noexcept</code></h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>MyClass<span class="op">(</span>MyClass<span class="op">&amp;&amp;</span> other<span class="op">)</span>  <span class="co">// ❌ Trūksta noexcept</span></span></code></pre></div>
+<h3 id="pamiršta-return-this">❌ Pamiršta <code>return *this</code></h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> MyClass<span class="op">&amp;</span> other<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    member <span class="op">=</span> other<span class="op">.</span>member<span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ❌ Trūksta: return *this;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="neapsaugota-nuo-self-assignment">❌ Neapsaugota nuo
+self-assignment</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> MyClass<span class="op">&amp;</span> other<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span><span class="op">[]</span> data<span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span>other<span class="op">.</span>size<span class="op">];</span>  <span class="co">// ❌ Jei this == &amp;other?</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ...</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h2 id="kada-naudoti-ką">📚 Kada Naudoti Ką?</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situacija</th>
+<th>Sprendimas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Standartiniai duomenų nariai (<code>std::string</code>,
+<code>std::vector</code>)</td>
+<td><code>= default</code></td>
+</tr>
+<tr class="even">
+<td>Reikia logging / debugging</td>
+<td>Pilna implementacija</td>
+</tr>
+<tr class="odd">
+<td>Nereikia copy semantics</td>
+<td><code>= delete</code> copy, <code>= default</code> move</td>
+</tr>
+<tr class="even">
+<td>Resource management (raw pointers)</td>
+<td>Pilna implementacija + RAII</td>
+</tr>
+<tr class="odd">
+<td>Norite optimize move</td>
+<td>Custom move implementation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="trumpai">🎯 Trumpai</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Minimalus teisingas pavyzdys:</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyClass <span class="op">{</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">~</span>MyClass<span class="op">()</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">(</span><span class="at">const</span> MyClass<span class="op">&amp;)</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">(</span>MyClass<span class="op">&amp;&amp;)</span> <span class="kw">noexcept</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> MyClass<span class="op">&amp;)</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    MyClass<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">=(</span>MyClass<span class="op">&amp;&amp;)</span> <span class="kw">noexcept</span> <span class="op">=</span> <span class="cf">default</span><span class="op">;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<p><strong>Įsiminti:</strong> Vienas → Visi penki! 🖐️</p>
+<hr />
+<h2 id="papildoma-literatūra">📖 Papildoma Literatūra</h2>
+<ul>
+<li>Scott Meyers - “Effective Modern C++” (Item 17)</li>
+<li>Howard Hinnant - “A Brief Introduction to Rvalue References”</li>
+<li>cppreference.com - “The rule of three/five/zero”</li>
+</ul>
+<hr />
+<p><strong>Sukūrė:</strong> Viktoras Golubev<br />
+<strong>Data:</strong> 2026-02-12<br />
+<strong>Kursas:</strong> OOP su C++</p>
+</body>
+</html>

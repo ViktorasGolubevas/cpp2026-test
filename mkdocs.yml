@@ -27,6 +27,8 @@ theme:
     - navigation.expand       # Išskleidžia meniu
     - navigation.top          # "Back to top" mygtukas
     - navigation.tabs         # Meniu perkelia į viršų (kaip naršyklės tab'ai) - gražiau
+    - navigation.instant        # ← SPA-like navigation
+    - navigation.tracking       # ← URL tracking
     - content.code.copy       # "Copy" mygtukas prie kodo
     - content.code.annotate   # ← NAUJAS: leidžia kodo anotacijas (1)
 
