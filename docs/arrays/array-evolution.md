@@ -27,6 +27,7 @@
 ### Problema
 
 ???+ example "Bandome sukurti objektų masyvą (atviras)"
+
 ```cpp
     --8<-- "code/arrays/01_c_arrays/student.cpp:15:30"
 ```
@@ -34,6 +35,7 @@
     ❌ **Problema**: `Student students[3]` kviečia tik default konstruktorių!
 
 ??? info "Pilnas kodas (click to expand)"
+
 ```cpp
     --8<-- "code/arrays/01_c_arrays/student.cpp"
 ```
@@ -41,11 +43,13 @@
 ### Kas blogai?
 
 === "Sukuriame"
+
 ```cpp
     Student students[3];  // Visi "Unknown", age=0, grade=0.0
 ```
 
 === "Reikia rankiniu būdu keisti"
+
 ```cpp
     strcpy(students[0].name, "Jonas");
     students[0].age = 20;
@@ -65,6 +69,7 @@
 ### Sprendimas
 
 ???+ example "C++11 inicializacijos sąrašas (atviras)"
+
 ```cpp
     --8<-- "code/arrays/02_init_list/student.cpp:40:45"
 ```
@@ -72,6 +77,7 @@
     ✅ Galime naudoti parametrinius konstruktorius!
 
 ??? info "Pilnas kodas"
+
 ```cpp
     --8<-- "code/arrays/02_init_list/student.cpp"
 ```
