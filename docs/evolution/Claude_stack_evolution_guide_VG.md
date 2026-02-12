@@ -1,14 +1,14 @@
 # Stack Evolution Guide: From Monolithic Code to ADT
 
 === "01"
-```c
+    ```c
     --8<-- "code/evolution/stack-2026/01_Running_PROGRAM/01_OK_naive/usestack.c"
-```
+    ```
 
 === "02"
-```cpp
+    ```cpp
     --8<-- "code/evolution/stack-2026/02_Decomposing_to_UNITS/01_NC/stack.c:1:10"
-```
+    ```
 
 ---
 
