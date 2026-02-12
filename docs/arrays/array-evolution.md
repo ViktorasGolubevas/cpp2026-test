@@ -29,14 +29,16 @@
 ???+ example "Bandome sukurti objektų masyvą (atviras)"
 
 ```cpp
+
     --8<-- "code/arrays/01_c_arrays/student.cpp:15:30"
 ```
-    
+  
     ❌ **Problema**: `Student students[3]` kviečia tik default konstruktorių!
 
-??? info "Pilnas kodas (click to expand)"
+??? info "Pilnas kodas (išskleisti)"
 
 ```cpp
+
     --8<-- "code/arrays/01_c_arrays/student.cpp"
 ```
 
