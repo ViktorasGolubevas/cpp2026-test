@@ -80,6 +80,7 @@ nav:
     - 'Nuo C link C++ (Stack): testas': evolution/stack-evoliucija-test.md
     - 'Konceptualūs barjerai': evolution/evoliucija-problemos.md
     - 'Objektų masyvai': evolution/array-evoliucija.md
+    - 'Objektų masyvai (+)': arrays/array-evolution.md
     - 'Parametrų perdavimas': betterc/ParamPass.md
   - 'Dizainas': design.md
 
