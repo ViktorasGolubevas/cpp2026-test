@@ -1,5 +1,17 @@
 # Stack Evolution Guide: From Monolithic Code to ADT
 
+=== "01"
+```c
+    --8<-- "code/evolution/stack-2026/01_Running_PROGRAM/01_OK_naive/usestack.c"
+```
+
+=== "02"
+```cpp
+    --8<-- "code/evolution/stack-2026/02_Decomposing_to_UNITS/01_NC/stack.c:1:10"
+```
+
+---
+
 ## 📚 Įvadas: Kodėl ADT (Abstract Data Type)?
 
 Šis vadovas parodo **evoliucinį kelią** nuo paprasčiausio monolitinio kodo iki pilnaverčio Abstract Data Type su enkapsulacija C kalboje. Kiekvienas žingsnis atskleidžia **realias problemas** ir jų sprendimus.
@@ -11,6 +23,7 @@
 ## 🎯 Mokymosi tikslai
 
 Po šio vadovo suprasite:
+
 - ✅ Skirtumą tarp **modulio** ir **ADT**
 - ✅ **Declaration** vs **Definition** (aprašas vs apibrėžimas)
 - ✅ **Information hiding** principą

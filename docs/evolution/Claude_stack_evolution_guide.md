@@ -11,6 +11,7 @@
 ## 🎯 Mokymosi tikslai
 
 Po šio vadovo suprasite:
+
 - ✅ Skirtumą tarp **modulio** ir **ADT**
 - ✅ **Declaration** vs **Definition** (aprašas vs apibrėžimas)
 - ✅ **Information hiding** principą
@@ -23,6 +24,7 @@ Po šio vadovo suprasite:
 ## Etapas 1: Naivus sprendimas - viskas vienoje programoje
 
 ### 🎯 Tikslas
+
 Parodyti paprasčiausią steką, visa logika vienoje funkcijoje.
 
 ### 💻 Sprendimas

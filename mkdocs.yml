@@ -28,6 +28,7 @@ theme:
     - navigation.top          # "Back to top" mygtukas
     - navigation.tabs         # Meniu perkelia į viršų (kaip naršyklės tab'ai) - gražiau
     - content.code.copy       # "Copy" mygtukas prie kodo
+    - content.code.annotate   # ← NAUJAS: leidžia kodo anotacijas (1)
 
 # Markdown plėtiniai (Čia prasideda magija)
 markdown_extensions:
@@ -57,11 +58,23 @@ markdown_extensions:
   # Matematinės formulės (jei reikės Big-O notacijai)
   - pymdownx.arithmatex:
       generic: true
+  
+  # ═══════════════════════════════════════════════════════════
+  # 🎯 NAUJAS: Kodo įterpimas iš failų!
+  # ═══════════════════════════════════════════════════════════
+  - pymdownx.snippets:
+      base_path: 
+        - 'docs'           # ieško docs/ kataloge
+        - '.'              # ieško repo root'e (pvz. code/)
+      check_paths: true    # patikrina, ar failai egzistuoja
+      dedent_subsections: true  # automatinis indentation fix
+      restrict_base_path: false  # leidžia pasiekti visą repo
 
 # Jūsų meniu struktūra
 nav:
   - 'Pradžia': index.md
   - 'Temos':
+    - '🔴 LIVE Evolution Demo': evolution/Claude_stack_evolution_guide_VG.md  # ← NAUJAS
     - 'Nuo C link C++ (Stack) by Claude: 1-9': evolution/Claude_stack_evolution_guide.md
     - 'Nuo C link C++ (Stack): 1-7': evolution/stack-evolution-1.md
     - 'Nuo C link C++ (Stack): testas': evolution/stack-evoliucija-test.md
@@ -69,3 +82,9 @@ nav:
     - 'Objektų masyvai': evolution/array-evoliucija.md
     - 'Parametrų perdavimas': betterc/ParamPass.md
   - 'Dizainas': design.md
+
+# ═══════════════════════════════════════════════════════════
+# 🎯 NAUJAS: Extra JavaScript (jei reikės Mermaid ar MathJax)
+# ═══════════════════════════════════════════════════════════
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js
