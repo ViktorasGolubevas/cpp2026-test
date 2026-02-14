@@ -79,11 +79,13 @@ nav:
     - '🔴 LIVE Evolution Demo': evolution/Claude_stack_evolution_guide_VG.md  # ← NAUJAS
     - 'Nuo C link C++ (Stack) by Claude: 1-9': evolution/Claude_stack_evolution_guide.md
     - 'Nuo C link C++ (Stack): 1-7': evolution/stack-evolution-1.md
+    - 'Nuo C link C++ (Stack): 9 Stages?': evolution/Stack_Evolution_Guide_9_Stages_FINAL.md
     - 'Nuo C link C++ (Stack): testas': evolution/stack-evoliucija-test.md
     - 'Konceptualūs barjerai': evolution/evoliucija-problemos.md
-    - 'Objektų masyvai': evolution/array-evoliucija.md
+    - 'Objektų masyvai': arrays/array-evoliucija.md
     - 'Objektų masyvai (+)': arrays/array-evolution.md
     - 'Parametrų perdavimas': betterc/ParamPass.md
+  - 'Paskaitos': Paskaitos/lecture_02_decomposing.md
   - 'Dizainas': design.md
 
 # ═══════════════════════════════════════════════════════════
