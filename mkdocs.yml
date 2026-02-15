@@ -67,6 +67,7 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path: 
         - 'docs'           # ieško docs/ kataloge
+        - 'docs/Paskaitos' 
         - '.'              # ieško repo root'e (pvz. code/)
       check_paths: true    # patikrina, ar failai egzistuoja
       dedent_subsections: true  # automatinis indentation fix
@@ -85,7 +86,9 @@ nav:
     - 'Objektų masyvai': arrays/array-evoliucija.md
     - 'Objektų masyvai (+)': arrays/array-evolution.md
     - 'Parametrų perdavimas': betterc/ParamPass.md
-  - 'Paskaitos': Paskaitos/lecture_02_decomposing.md
+  - 'Paskaitos': 
+    - '1-a': Paskaitos/lecture_02_decomposing.md
+    - '2-a': Paskaitos/stack_C_evolution_CORRECT.md
   - 'Dizainas': design.md
 
 # ═══════════════════════════════════════════════════════════
