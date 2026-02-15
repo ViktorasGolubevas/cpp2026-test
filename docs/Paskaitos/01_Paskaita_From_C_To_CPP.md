@@ -2,35 +2,54 @@
 ## 9 Etapų Kelionė: Nuo Monolito iki Pilno ADT
 
 !!! abstract "Šios kelionės tikslas"
-    Patirti **natūralią** Stack Abstract Data Type evoliuciją nuo paprasčiausio monolito iki pilnai realizuoto ADT su lifecycle valdymu. Kiekvienas etapas sprendžia ankstesnio problemą, mokydamas "per nagus" - ne iš teorijos, o iš praktikos. **Kompiliavimo ir linkavimo klaidos yra mokymosi įrankis**, ne problema kurią reikia slėpti.
+    Susipažinti su **Abstraktaus duomenų tipo** (toliau - **ADT**) "Stekas", (angl. _Abstract Data Type_ _**Stack**_) evoliucija **C kalboje**: nuo paprasčiausio monolito iki pilnai realizuoto ADT su jo egzemoliorių gyvavimo ciklo (_lifecycle_) valdymu.
+
+    Kiekvienas etapas (paprastai) sprendžia ankstesnio problemą, mokydamasis iš bandymų ir klaidų, gilindamas teorinies žinias ir praktikius įgūdžius. 
+    >**Kompiliavimo ir linkavimo klaidos ir perspėjimai yra mokymosi įrankis!**
 
 ---
 
-## Etapas 01: Running PROGRAM
-### Monolitas - viskas viename faile
+## 1️⃣Etapas: "Stekas-Programa" 
+> `01_Running_PROGRAM`
+ 
+!!! note "Kontekstas"
+    "Monolitinė" programa - viskas viename faile.
 
-Pradedame nuo paprasčiausio sprendimo - **vienas failas, visa logika kartu**.
+### Sprendimas 1: "Naivus"
+> `01_Running_PROGRAM/01_OK_Naive/`
+
+Pradedame nuo paprasčiausio sprendimo - **vienas failas: ir visa logika, ir visa "fizika" kartu**.
 
 === "usestack.c"
 
-    ```c title="01_Running_PROGRAM/01_OK_naive/usestack.c"
-    --8<-- "code/evolution/stack-2026/01_Running_PROGRAM/01_OK_naive/usestack.c"
-    ```
+    ??? "📄 01_Running_PROGRAM/01_OK_naive/usestack.c"
 
-=== "Kompiliavimas"
+        ```c linenums="1" hl_lines="6-7"
+        --8<-- "code/evolution/stack-2026/01_Running_PROGRAM/01_OK_naive/usestack.c"
+        ```
+
+=== "🔨 = ⚙️➔🔗➔🚀"
 
     ```bash
-    gcc usestack.c -o usestack
-    ./usestack
+    $gcc usestack.c -o app
+    ./app
     ```
-    
-    **Išvestis:**
+    arba (win)
+    ```bash
+    >gcc usestack.c -o app
+    app
+    ```
+
+=== "⌨️➔🖥️"
+
     ```
     123
     321
     ```
 
-### Monolito privalumai ir problemos
+---
+
+#### ✅ Veikia! Bet...
 
 ??? success "Privalumai"
     - **Funkcijų eiliškumas nesvarbus:** `main()` gali būti viršuje
@@ -38,7 +57,7 @@ Pradedame nuo paprasčiausio sprendimo - **vienas failas, visa logika kartu**.
     - **Paprastas build:** Viena komanda
     - **Greitas prototipavimas:** Įdarbinimo pokalbio "quick solution"
 
-??? danger "Problemos"
+??? danger "Problemos, pavojai..."
     - **Globalūs kintamieji:** `stack[]` ir `top` matomi visur
     - **Tik vienas stekas:** Negalima turėti kelių
     - **Pakartotinis naudojimas:** Kaip kitas projektas naudotų?
@@ -46,85 +65,165 @@ Pradedame nuo paprasčiausio sprendimo - **vienas failas, visa logika kartu**.
 
 ---
 
-## Etapas 02: Decomposing to UNITS
-### Fizinis padalijimas - "per nagus" mokymasis
+## 2️⃣Etapas: "Stekas-Failas" 
+> `02_Decomposing_to_UNITS`
 
-### Žingsnis 1: Naivus atskyrimas (01_NC)
+!!! note "Kontekstas"
+    Lyg ir logiškas fizinis padalijimas į failus: paslauga (`stack.c`) + vartotojas (`user.c`).
 
-**Studentų mintis:** *"Tiesiog supjausčiau į du failus!"*
+### Sprendimas 1: Kodo padalijimas
+> `02_Decomposing_to_UNITS/01_NC/`
 
-=== "stack.c"
-
-    ```c title="02_Decomposing_to_UNITS/01_NC/stack.c"
-    --8<-- "code/evolution/stack-2026/02_Decomposing_to_UNITS/01_NC/stack.c"
-    ```
-
-=== "user.c"
-
-    ```c title="02_Decomposing_to_UNITS/01_NC/user.c"
-    --8<-- "code/evolution/stack-2026/02_Decomposing_to_UNITS/01_NC/user.c"
-    ```
-
-=== "GCC (warning)"
-
-    ```bash
-    $ gcc -c user.c
-    warning: implicit declaration of function 'init'
-    warning: implicit declaration of function 'push'
-    ```
-    ⚠️ Kompiliuojasi su warnings
-
-=== "Clang (error)"
-
-    ```bash
-    $ clang -c user.c
-    error: call to undeclared function 'init'
-    4 errors generated.
-    ```
-    ❌ Nepavyksta!
-
-??? info "Monolito vs modulių skirtumas"
-    **Monolite:** kompiliatorius mato visą failą  
-    **Moduliuose:** kiekvienas `.c` = atskiras vienetas, reikia deklaracijų
-
----
-
-### Žingsnis 2: "Logiška" idėja (02_NL)
-
-**Studentų mintis:** *"Sujungsiu su `#include "stack.c"`!"*
+!!! quote "sumanymas/ketinimas"
+    Tiesiog padalinau kodą į du failus ir kompiliuoju atskirai, kaip manęs ir reikalauja.
 
 === "stack.c"
 
-    ```c title="02_Decomposing_to_UNITS/02_NL/stack.c"
-    --8<-- "code/evolution/stack-2026/02_Decomposing_to_UNITS/02_NL/stack.c"
-    ```
+    ??? "📄 02_Decomposing_to_UNITS/01_NC/stack.c"
+
+        ```c 
+        --8<-- "code/evolution/stack-2026/02_Decomposing_to_UNITS/01_NC/stack.c"
+        ```
 
 === "user.c"
 
-    ```c title="02_Decomposing_to_UNITS/02_NL/user.c"
-    --8<-- "code/evolution/stack-2026/02_Decomposing_to_UNITS/02_NL/user.c"
-    ```
+    ??? "📄 02_Decomposing_to_UNITS/01_NC/user.c"
 
-=== "Linkavimo klaida"
+        ```c
+        --8<-- "code/evolution/stack-2026/02_Decomposing_to_UNITS/01_NC/user.c"
+        ```
+
+=== "⚙️gcc → ⚠️warning"
 
     ```bash
-    gcc -c stack.c -o stack.o
-    gcc -c user.c -o user.o
-    gcc stack.o user.o -o app
+    gcc -c stack.c # ✅
+    gcc -c user.c  # ⚠️
+    user.c: In function 'main':
+    user.c:6:5: warning: implicit declaration of function 'init' [-Wimplicit-function-declaration]
+        6 |     init();
+        |     ^~~~
+    user.c:7:37: warning: implicit declaration of function 'push' [-Wimplicit-function-declaration]
+        7 |     while ('\n' != (c = getchar())) push(c);
+        |                                     ^~~~
+    user.c:8:13: warning: implicit declaration of function 'isEmpty' [-Wimplicit-function-declaration]
+        8 |     while (!isEmpty()) putchar(pop());
+        |             ^~~~~~~
+    user.c:8:32: warning: implicit declaration of function 'pop'; did you mean 'popen'? [-Wimplicit-function-declaration]
+        8 |     while (!isEmpty()) putchar(pop());
+        |                                ^~~
+        |                                popen
     ```
     
-    ```
-    multiple definition of `push'
-    multiple definition of `pop'
-    ```
-    💥 Dubliavimasis!
+=== "⚙️clang → ❌error"
 
-??? danger "Preprocesoriaus copy-paste"
-    `#include "stack.c"` įklijuoja turinį → abi funkcijos abiejuose `.o` failuose
+    ```bash
+    clang -c stack.c # ✅
+    clang -c user.c  # ❌
+    user.c:6:5: error: call to undeclared function 'init'; ISO C99 and later do not support implicit function declarations
+        [-Wimplicit-function-declaration]
+        6 |     init();
+        |     ^
+    user.c:7:37: error: call to undeclared function 'push'; ISO C99 and later do not support implicit function declarations
+        [-Wimplicit-function-declaration]
+        7 |     while ('\n' != (c = getchar())) push(c);
+        |                                     ^
+    user.c:8:13: error: call to undeclared function 'isEmpty'; ISO C99 and later do not support implicit function
+        declarations [-Wimplicit-function-declaration]
+        8 |     while (!isEmpty()) putchar(pop());
+        |             ^
+    user.c:8:32: error: call to undeclared function 'pop'; ISO C99 and later do not support implicit function declarations
+        [-Wimplicit-function-declaration]
+        8 |     while (!isEmpty()) putchar(pop());
+        |                                ^
+    4 errors generated.
+    ```
+---
+
+#### ❌ Nesikompiliuoja
+
+??? bug "Kompiliavimo klaida!"
+    Kreipiamės į **neaprašytą** funkciją - kompiliatorius "nežino" kas tai per vardas, ką ar kokį veiksmą jis "atstovauja".
+
+??? info "Monolitas vs atskiri failai"
+    **Monolite:** kompiliatorius mato visą failą: jeigu kreipiamės vardu (į kintamąjį ar kviečiame funkciją), jų **apibrėžimai** (_*definition*_) yra jame.
+
+    **Failuose:** kiekvienas `.c` yra atskiras kompiliavimo vienetas: vardų apibrėžtų kitame faile nemato - reikia (bent) jų **aprašų**/**deklaracijų** (_*declaration*_).
 
 ---
 
-### Žingsnis 3: "Žingsnis atgal" (03_OK_Wrong)
+### Sprendimas 2: `.c` failo `#include`
+
+> `02_Decomposing_to_UNITS/02_NL/`
+
+!!! quote "sumanymas/ketinimas"
+    Jei nemato vardų, o yra `#include`, tai jį ir panaudosiu - tada matys (kitur veikia pvz. `import`).
+
+=== "stack.c"
+
+    ??? "📄 02_Decomposing_to_UNITS/02_NL/stack.c"
+
+        ```c 
+        --8<-- "code/evolution/stack-2026/02_Decomposing_to_UNITS/02_NL/stack.c"
+        ```
+
+=== "user.c"
+
+    ??? "📄 02_Decomposing_to_UNITS/02_NL/user.c"
+
+        ```c
+        --8<-- "code/evolution/stack-2026/02_Decomposing_to_UNITS/02_NL/user.c"
+        ```
+
+=== "⚙️gcc → 🔗gcc → ❌error"
+
+    ```bash
+    gcc -c stack.c -o stack.o  # ✅
+    gcc -c user.c -o user.o    # ✅
+    gcc stack.o user.o -o app  # ❌
+    ```
+    ```
+    C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.text+0x0): multiple definition of `init'; stack.o:stack.c:(.text+0x0): first defined here
+    C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.text+0x11): multiple definition of `isEmpty'; stack.o:stack.c:(.text+0x11): first defined here
+    C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.text+0x25): multiple definition of `isFull'; stack.o:stack.c:(.text+0x25): first defined here
+    C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.text+0x3a): multiple definition of `push'; stack.o:stack.c:(.text+0x3a): first defined here
+    C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.text+0x76): multiple definition of `pop'; stack.o:stack.c:(.text+0x76): first defined here
+    C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.bss+0x0): multiple definition of `stack'; stack.o:stack.c:(.bss+0x0): first defined here
+    C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.bss+0x8): multiple definition of `top'; stack.o:stack.c:(.bss+0x8): first defined here
+    collect2.exe: error: ld returned 1 exit status
+    ```
+    ❌ multiple definition of ...
+
+=== "⚙️clang → 🔗clang → ❌error"
+
+    ```bash
+    clang -c stack.c -o stack.o  # ✅
+    clang -c user.c -o user.o    # ✅
+    clang stack.o user.o -o app  # ❌
+    ```
+    ```
+    C:/mingw64/bin/ld: user.o:user.c:(.text+0x0): multiple definition of `init'; stack.o:stack.c:(.text+0x0): first defined here
+    C:/mingw64/bin/ld: user.o:user.c:(.text+0x11): multiple definition of `isEmpty'; stack.o:stack.c:(.text+0x11): first defined here
+    C:/mingw64/bin/ld: user.o:user.c:(.text+0x25): multiple definition of `isFull'; stack.o:stack.c:(.text+0x25): first defined here
+    C:/mingw64/bin/ld: user.o:user.c:(.text+0x3a): multiple definition of `push'; stack.o:stack.c:(.text+0x3a): first defined here
+    C:/mingw64/bin/ld: user.o:user.c:(.text+0x76): multiple definition of `pop'; stack.o:stack.c:(.text+0x76): first defined here
+    C:/mingw64/bin/ld: user.o:user.c:(.bss+0x0): multiple definition of `stack'; stack.o:stack.c:(.bss+0x0): first defined here
+    C:/mingw64/bin/ld: user.o:user.c:(.bss+0x8): multiple definition of `top'; stack.o:stack.c:(.bss+0x8): first defined here
+    clang: error: linker command failed with exit code 1 (use -v to see invocation)
+    ```
+    ❌ multiple definition of ...
+
+---
+
+#### ❌ Nesilinkina
+
+??? bug "Linkinimo klaida!"
+    `#include "stack.c"` įterpia turinį → visi `stack.c` **apibrėžimai** (kintamieji ir funkcijos) po kompiliavimo yra abiejuose `.o` failuose.
+
+    Linkeris nori sulinkinti kreipinius į vardus su jų apibrėžimu (vieninteliu!), bet jų du.
+
+---
+
+### Sprendimas 3: `.c` failo `#include` su "žingsniu atgal"
 
 **Studentų mintis:** *"Gal užtenka tik user.c?"*
 
