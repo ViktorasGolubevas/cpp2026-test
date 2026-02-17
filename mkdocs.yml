@@ -88,6 +88,10 @@ nav:
     - 'Parametrų perdavimas': betterc/ParamPass.md
   - 'Paskaitos':
     - '01 Paskaita': Paskaitos/01_Paskaita_From_C_To_CPP.md
+    - '01 Paskaita +': Paskaitos/01_Paskaita_From_C_To_CPP_03_ETAPAS_REFORMATTED.md
+    - '01 Paskaita ++': Paskaitos/01_Paskaita_PILNAI_PERFORMATUOTA.md
+    - '01 Paskaita +++': Paskaitos/01_Paskaita_FINAL_SU_PREAMBULE.md
+    - '01 Paskaita ++++': Paskaitos/01_Paskaita_TIKRAI_FINAL.md
     - 'x-a': Paskaitos/lecture_02_decomposing.md
     - 'y-a': Paskaitos/stack_C_evolution_CORRECT.md
   - 'Dizainas': design.md

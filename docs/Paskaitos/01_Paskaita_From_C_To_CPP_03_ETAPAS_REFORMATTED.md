@@ -287,7 +287,7 @@ Pradedame nuo paprasčiausio sprendimo - **vienas failas: ir visa logika, ir vis
 
 ## 3️⃣Etapas: "Stekas-Modulis"
 
-> `03_Discovering C MODULE`
+> [`03_Discovering_C_MODULE`](https://github.com/ViktorasGolubevas/cpp2026-test/tree/main/code/evolution/stack-2026/03_Discovering_C_MODULE/)
 
 !!! note "Kontekstas"
     Tikras C modulis su header failu.
@@ -304,11 +304,14 @@ Pradedame nuo paprasčiausio sprendimo - **vienas failas: ir visa logika, ir vis
 
 > `03_Discovering_C_MODULE/02_NL/`
 
+!!! quote "sumanymas/ketinimas"
+    Sukursiu tikrą C modulį: `.h` su deklaracijomis, `.c` su apibrėžimais. Tiesiog perkelsiu funkcijų prototipus ir kintamųjų deklaracijas į header failą.
+
 === "stack.h" 
 
     ???+ "📄 03_Discovering_C_MODULE/02_NL/stack.h"
     
-        ```c linenums="1" hl_lines="6-12"
+        ```c linenums="1" hl_lines="6-7"
         --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/02_NL/stack.h"
         ```
 
@@ -316,7 +319,7 @@ Pradedame nuo paprasčiausio sprendimo - **vienas failas: ir visa logika, ir vis
 
     ??? "📄 03_Discovering_C_MODULE/02_NL/stack.c"
     
-        ```c linenums="1"  hl_lines="2"
+        ```c linenums="1" hl_lines="2"
         --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/02_NL/stack.c"
         ```
 
@@ -324,131 +327,265 @@ Pradedame nuo paprasčiausio sprendimo - **vienas failas: ir visa logika, ir vis
 
     ??? "📄 03_Discovering_C_MODULE/02_NL/user.c"
     
-        ```c linenums="1"  hl_lines="2"
+        ```c linenums="1" hl_lines="2"
         --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/02_NL/user.c"
         ```
 
-=== "⚙️gcc → 🔗gcc → ❌error"
+=== "🔨 = ⚙️➔🔗➔❌"
 
-    ```bash
-    gcc -c stack.c -o stack.o  # ✅
-    gcc -c user.c -o user.o    # ✅
-    gcc stack.o user.o -o app  # ❌
-    ```
-    ```
-    C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.bss+0x0): multiple definition of `stack'; stack.o:stack.c:(.bss+0x0): first defined here
-    C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.bss+0x64): multiple definition of `top'; stack.o:stack.c:(.bss+0x64): first defined here
-    collect2.exe: error: ld returned 1 exit status
-    ```
-    ❌ multiple definition of ...
-
-=== "⚙️clang → 🔗clang → ❌error"
-
-    ```bash
-    clang -c stack.c -o stack.o  # ✅
-    clang -c user.c -o user.o    # ✅
-    clang stack.o user.o -o app  # ❌
-    ```
-    ```
-    C:/mingw64/bin/ld: user.o:user.c:(.bss+0x0): multiple definition of `top'; stack.o:stack.c:(.bss+0x0): first defined here
-    C:/mingw64/bin/ld: user.o:user.c:(.bss+0x10): multiple definition of `stack'; stack.o:stack.c:(.bss+0x10): first defined here
-    clang: error: linker command failed with exit code 1 (use -v to see invocation)
-    ```
-    ❌ multiple definition of ...
+    === "⚙️gcc ➔ 🔗gcc ➔ ❌error"
+    
+        ```bash
+        gcc -c stack.c -o stack.o  # ✅
+        gcc -c user.c -o user.o    # ✅
+        gcc stack.o user.o -o app  # ❌
+        ```
+        ```
+        C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.bss+0x0): multiple definition of `stack'; stack.o:stack.c:(.bss+0x0): first defined here
+        C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: user.o:user.c:(.bss+0x64): multiple definition of `top'; stack.o:stack.c:(.bss+0x64): first defined here
+        collect2.exe: error: ld returned 1 exit status
+        ```
+        ❌ multiple definition of ...
+    
+    === "⚙️clang ➔ 🔗clang ➔ ❌error"
+    
+        ```bash
+        clang -c stack.c -o stack.o  # ✅
+        clang -c user.c -o user.o    # ✅
+        clang stack.o user.o -o app  # ❌
+        ```
+        ```
+        C:/mingw64/bin/ld: user.o:user.c:(.bss+0x0): multiple definition of `top'; stack.o:stack.c:(.bss+0x0): first defined here
+        C:/mingw64/bin/ld: user.o:user.c:(.bss+0x10): multiple definition of `stack'; stack.o:stack.c:(.bss+0x10): first defined here
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+        ```
+        ❌ multiple definition of ...
 
 ---
 
 #### ❌ Nesilinkina
 
 ??? bug "Linkinimo klaida!"
-     Kintamieji apibrėžti header'yje → abu failai sukuria kopijas. Tas pats kaip buvo, bet tik kintamiesiems. Reikia "aprašo formos" kintamiesiems. Pasitelkiam `extern`.
-
+    Kintamieji apibrėžti header'yje → abu failai sukuria kopijas. Tas pats kaip buvo, bet tik kintamiesiems. Reikia "aprašo formos" kintamiesiems. Pasitelkiam `extern`.
 
 ---
-+++
----
 
-### Žingsnis 2:  į `.h` su `extern`
+### 2 sprendimas: į `.h` su `extern`
+
+> `03_Discovering_C_MODULE/03_NL/`
+
+!!! quote "sumanymas/ketinimas"
+    Išmokau, kad header'yje reikia `extern` kintamiesiems! Pridėsiu `extern` prie `stack[]` ir `top` deklaracijų.
 
 === "stack.h"
 
-    ```c title="03_Discovering_C_MODULE/03_NL/stack.h"
-    --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/03_NL/stack.h"
-    ```
+    ???+ "📄 03_Discovering_C_MODULE/03_NL/stack.h"
+    
+        ```c linenums="1" hl_lines="6-7"
+        --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/03_NL/stack.h"
+        ```
 
 === "stack.c"
 
-    ```c title="03_Discovering_C_MODULE/03_NL/stack.c"
-    --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/03_NL/stack.c"
-    ```
+    ??? "📄 03_Discovering_C_MODULE/03_NL/stack.c"
+    
+        ```c linenums="1" hl_lines="2"
+        --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/03_NL/stack.c"
+        ```
 
 === "user.c"
 
-    ```c title="03_Discovering_C_MODULE/03_NL/user.c"
-    --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/03_NL/user.c"
-    ```
+    ??? "📄 03_Discovering_C_MODULE/03_NL/user.c"
+    
+        ```c linenums="1" hl_lines="2"
+        --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/03_NL/user.c"
+        ```
 
-??? danger "Dar viena NL klaida"
-    Kitas bandymas, kita linkavimo problema
+=== "🔨 = ⚙️➔🔗➔❌"
+
+    === "⚙️gcc ➔ 🔗gcc ➔ ❌error"
+    
+        ```bash
+        gcc -c stack.c -o stack.o  # ✅
+        gcc -c user.c -o user.o    # ✅
+        gcc stack.o user.o -o app  # ❌
+        ```
+        ```
+        C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: stack.o:stack.c:(.bss+0x0): multiple definition of `stack'; user.o:user.c:(.bss+0x0): first defined here
+        C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: stack.o:stack.c:(.bss+0x64): multiple definition of `top'; user.o:user.c:(.bss+0x64): first defined here
+        collect2.exe: error: ld returned 1 exit status
+        ```
+        ❌ multiple definition of ...
+    
+    === "⚙️clang ➔ 🔗clang ➔ ❌error"
+    
+        ```bash
+        clang -c stack.c -o stack.o  # ✅
+        clang -c user.c -o user.o    # ✅
+        clang stack.o user.o -o app  # ❌
+        ```
+        ```
+        C:/mingw64/bin/ld: user.o:user.c:(.bss+0x0): multiple definition of `stack'; stack.o:stack.c:(.bss+0x0): first defined here
+        C:/mingw64/bin/ld: user.o:user.c:(.bss+0x64): multiple definition of `top'; stack.o:stack.c:(.bss+0x64): first defined here
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+        ```
+        ❌ multiple definition of ...
 
 ---
 
-### Žingsnis 3: Teisingas modulis (04_OK)
+#### ❌ Nesilinkina
+
+??? bug "Dar viena NL klaida!"
+    `extern` header'yje gerai, bet `stack.c` TAIP PAT turi kintamųjų apibrėžimus! Dabar abu `.c` failai sukuria apibrėžimus. Header'yje turi būti TIK `extern` deklaracijos, o apibrėžimas – TIKTAI viename `.c` faile.
+
+---
+
+### 3 sprendimas: Teisingas modulis
+
+> `03_Discovering_C_MODULE/04_OK/`
+
+!!! quote "sumanymas/ketinimas"
+    Supratau! Header'yje – `extern` deklaracijos, o apibrėžimas tik `stack.c` faile (be `extern`). User.c tik naudoja, bet neapibrėžia.
 
 === "stack.h"
 
-    ```c title="03_Discovering_C_MODULE/04_OK/stack.h"
-    --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/04_OK/stack.h"
-    ```
+    ???+ "📄 03_Discovering_C_MODULE/04_OK/stack.h"
+    
+        ```c linenums="1" hl_lines="6-7"
+        --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/04_OK/stack.h"
+        ```
 
 === "stack.c"
 
-    ```c title="03_Discovering_C_MODULE/04_OK/stack.c"
-    --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/04_OK/stack.c"
-    ```
+    ??? "📄 03_Discovering_C_MODULE/04_OK/stack.c"
+    
+        ```c linenums="1" hl_lines="2 5-6"
+        --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/04_OK/stack.c"
+        ```
 
 === "user.c"
 
-    ```c title="03_Discovering_C_MODULE/04_OK/user.c"
-    --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/04_OK/user.c"
+    ??? "📄 03_Discovering_C_MODULE/04_OK/user.c"
+    
+        ```c linenums="1" hl_lines="2"
+        --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/04_OK/user.c"
+        ```
+
+=== "🔨 = ⚙️➔🔗➔🚀"
+
+    ```bash
+    gcc -c stack.c -o stack.o  # ✅
+    gcc -c user.c -o user.o    # ✅
+    gcc stack.o user.o -o app  # ✅
+    ./app
     ```
+    arba (win)
+    ```bash
+    gcc -c stack.c -o stack.o
+    gcc -c user.c -o user.o
+    gcc stack.o user.o -o app
+    app
+    ```
+
+=== "⌨️➔🖥️"
+
+    ```
+    123
+    321
+    ```
+
+---
+
+#### ✅ Veikia! Bet...
 
 ??? success "Dabar teisingai!"
     - `extern` deklaracijos header'yje
     - Apibrėžimai stack.c
     - Tikras C modulis
 
+??? danger "Problemos, pavojai..."
+    - **Globalūs kintamieji viešai prieinami:** Kas nors gali rašyti `extern int top;` savo kode ir manipuliuoti!
+    - **Nėra apsaugos:** Bet kas gali sugadinti `top` ar `stack[]`
+
 ---
 
-### Žingsnis 4: Ataka pavyksta (05_OK_Attack)
+### 4 sprendimas: Ataka pavyksta
+
+> `03_Discovering_C_MODULE/05_OK_Attack/`
+
+!!! quote "sumanymas/ketinimas"
+    Pademonstruoju, kad net ir "teisingas" modulis su `extern` nėra saugus – "attacker" gali pridėti `extern int top;` ir keisti steko būseną.
 
 === "stack.h"
 
-    ```c title="03_Discovering_C_MODULE/05_OK_Attack/stack.h"
-    --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/05_OK_Attack/stack.h"
-    ```
+    ??? "📄 03_Discovering_C_MODULE/05_OK_Attack/stack.h"
+    
+        ```c linenums="1" hl_lines="6-7"
+        --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/05_OK_Attack/stack.h"
+        ```
 
 === "stack.c"
 
-    ```c title="03_Discovering_C_MODULE/05_OK_Attack/stack.c"
-    --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/05_OK_Attack/stack.c"
+    ??? "📄 03_Discovering_C_MODULE/05_OK_Attack/stack.c"
+    
+        ```c linenums="1" hl_lines="2 5-6"
+        --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/05_OK_Attack/stack.c"
+        ```
+
+=== "user_attack.c"
+
+    ???+ "📄 03_Discovering_C_MODULE/05_OK_Attack/user_attack.c"
+    
+        ```c linenums="1" hl_lines="3-4 10"
+        --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/05_OK_Attack/user_attack.c"
+        ```
+
+=== "🔨 = ⚙️➔🔗➔🚀"
+
+    ```bash
+    gcc -c stack.c -o stack.o
+    gcc -c user_attack.c -o user_attack.o
+    gcc stack.o user_attack.o -o app
+    ./app  # ✅ bet rezultatas BLOGAS!
+    ```
+    arba (win)
+    ```bash
+    gcc -c stack.c -o stack.o
+    gcc -c user_attack.c -o user_attack.o
+    gcc stack.o user_attack.o -o app
+    app
     ```
 
-=== "attacker.c"
+=== "⌨️➔🖥️"
 
-    ```c title="03_Discovering_C_MODULE/05_OK_Attack/user_attack.c"
-    --8<-- "code/evolution/stack-2026/03_Discovering_C_MODULE/05_OK_Attack/user_attack.c"
+    ```
+    HACKED: -1
+    321
     ```
 
-??? danger "Globalūs kintamieji vieši"
+---
+
+#### ✅ Veikia, bet BLOGAI!
+
+??? danger "Globalūs kintamieji viešai prieinami"
     ```c
     extern int top;
     top = -1;  // ← Galima manipuliuoti!
     ```
+    Vartotojas gali tiesiogiai pasiekti ir sugadinti vidinę steко būseną!
+    
     **Sprendimas → Etapas 04:** `static` linkage
 
 ---
 
+### 💡 Pamokos
+
+!!! tip "C Modulio Anatomija"
+    - **Header (`.h`)**: `extern` deklaracijos globalių kintamųjų + funkcijų prototipai
+    - **Source (`.c`)**: Kintamųjų apibrėžimai (be `extern`) + funkcijų realizacijos
+    - **Problem**: Globalūs kintamieji su `extern` yra prieinami bet kam!
+
+---
 ## Etapas 04: Protecting IMPLEMENTATION
 ### Information hiding su `static`
 

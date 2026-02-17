@@ -1,6 +1,6 @@
-# U2: Sprendimas - IntList Klasė ir RAII
+# U2: Sprendimas - OOP Pagrindai. Klasės ir Objektai
 
-**Dėstytojui:** Pilnas sprendimas su kodu ir paaiškinimais.
+**Dėstytojui:** Šis failas skirtas jums - pilnas sprendimas su kodu, paaiškinimais ir "virtuve".
 
 ---
 
@@ -8,149 +8,188 @@
 
 ```
 U2/
-├── README.md
 ├── 01/
-│   ├── IntList.h
-│   ├── IntList.cpp
-│   ├── main.cpp
-│   └── Makefile
+│   ├── student_struct.cpp
+│   └── student_class.cpp
 ├── 02/
-│   ├── IntList.h
-│   ├── IntList.cpp
+│   ├── Student.h
+│   ├── Student.cpp
 │   ├── main.cpp
 │   └── Makefile
-└── 03/
-    ├── IntList.h
-    ├── IntList.cpp
+├── 03/
+│   ├── Student.h
+│   ├── Student.cpp
+│   ├── main.cpp
+│   └── Makefile
+├── 04/
+│   ├── Student.h
+│   ├── Student.cpp
+│   ├── main.cpp
+│   └── Makefile
+├── 05/
+│   ├── Student.h
+│   ├── Student.cpp
+│   ├── main.cpp
+│   └── Makefile
+└── 06-bonus/
+    ├── Student.h
+    ├── Student.cpp
     ├── main.cpp
     └── Makefile
 ```
 
 ---
 
-## 1️⃣ **1 žingsnis: Basic klasė su fiksuotu masyvu**
+## 1️⃣ **1 žingsnis: Struct → Class transformacija**
 
-### **IntList.h:**
+### **student_struct.cpp (C struktūros versija):**
 
 ```cpp
-#ifndef INTLIST_H
-#define INTLIST_H
+#include <iostream>
+#include <cstring>
+using namespace std;
 
-class IntList {
+struct Student {
+    char vardas[50];
+    int amzius;
+    double pazymys;
+};
+
+int main() {
+    Student s1;
+    strcpy(s1.vardas, "Jonas");
+    s1.amzius = 20;
+    s1.pazymys = 8.5;
+    
+    cout << "Studentas: " << s1.vardas 
+         << ", Amžius: " << s1.amzius 
+         << ", Pažymys: " << s1.pazymys << endl;
+    
+    return 0;
+}
+```
+
+### **Kompiliavimas:**
+```bash
+g++ student_struct.cpp -o struct_versija
+./struct_versija
+```
+
+### **Išvestis:**
+```
+Studentas: Jonas, Amžius: 20, Pažymys: 8.5
+```
+
+---
+
+### **student_class.cpp (C++ klasės versija su public):**
+
+```cpp
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Student {
+public:  // Visi nariai public (kaip struct)
+    char vardas[50];
+    int amzius;
+    double pazymys;
+};
+
+int main() {
+    Student s1;
+    strcpy(s1.vardas, "Petras");
+    s1.amzius = 21;
+    s1.pazymys = 9.0;
+    
+    cout << "Studentas: " << s1.vardas 
+         << ", Amžius: " << s1.amzius 
+         << ", Pažymys: " << s1.pazymys << endl;
+    
+    return 0;
+}
+```
+
+### **Kompiliavimas:**
+```bash
+g++ student_class.cpp -o class_versija
+./class_versija
+```
+
+### **Išvestis:**
+```
+Studentas: Petras, Amžius: 21, Pažymys: 9
+```
+
+### **Pedagoginės pastabos:**
+- ✅ Abu failai **veikia vienodai** - skirtumas tik `struct` vs `class` keyword
+- ✅ `struct` - nariai **public** pagal nutylėjimą
+- ✅ `class` su `public:` - taip pat visi nariai **public**
+- 💡 Kitas žingsnis: `class` su `private` - tikroji enkapsulacija
+- ⚠️ Dažna klaida: Pamiršti `;` po `}` klasės deklaracijoje
+
+---
+
+## 2️⃣ **2 žingsnis: Konstruktoriai**
+
+### **Student.h:**
+
+```cpp
+#ifndef STUDENT_H
+#define STUDENT_H
+
+class Student {
 private:
-    int duomenys[100];  // Fiksuoto dydžio masyvas
-    int dydis;          // Dabartinis elementų skaičius
+    char vardas[50];
+    int amzius;
+    double pazymys;
     
 public:
-    // Konstruktorius
-    IntList();
+    // Konstruktoriai
+    Student();  // Default
+    Student(const char* v, int a, double p);  // Parametrinis
     
-    // Metodai
-    void pridetiGala(int reiksme);
-    int gautiElementa(int indeksas) const;
-    int gautiDydi() const;
-    void spausdinti() const;
+    // Metodai (kol kas tik prototypai)
 };
 
 #endif
 ```
 
-### **Pedagoginės pastabos (header guard):**
-- ✅ `#ifndef` / `#define` / `#endif` - standartas
-- ✅ Paprastai vardas: `KLASESVARAS_H` (uppercase)
-- ⚠️ Dažna klaida: pamiršti `#endif`
-
----
-
-### **IntList.cpp:**
+### **Student.cpp:**
 
 ```cpp
-#include "IntList.h"
+#include "Student.h"
 #include <iostream>
+#include <cstring>
 
-// Konstruktorius
-IntList::IntList() {
-    dydis = 0;  // Pradžioje sąrašas tuščias
+// Default konstruktorius
+Student::Student() {
+    strcpy(vardas, "Nezinomas");
+    amzius = 0;
+    pazymys = 0.0;
+    std::cout << "[TEST] Student sukurtas (default): " << vardas << std::endl;
 }
 
-// Pridėti elementą į pabaigą
-void IntList::pridetiGala(int reiksme) {
-    if (dydis >= 100) {
-        std::cout << "[KLAIDA] Masyvas pilnas!" << std::endl;
-        return;
-    }
-    duomenys[dydis] = reiksme;
-    dydis++;
-}
-
-// Gauti elementą pagal indeksą
-int IntList::gautiElementa(int indeksas) const {
-    if (indeksas < 0 || indeksas >= dydis) {
-        std::cout << "[KLAIDA] Blogas indeksas!" << std::endl;
-        return -1;  // Klaida (vėliau bus exception)
-    }
-    return duomenys[indeksas];
-}
-
-// Gauti dabartinį dydį
-int IntList::gautiDydi() const {
-    return dydis;
-}
-
-// Spausdinti visus elementus
-void IntList::spausdinti() const {
-    std::cout << "IntList dydis: " << dydis << std::endl;
-    std::cout << "Elementai: [";
-    for (int i = 0; i < dydis; i++) {
-        std::cout << duomenys[i];
-        if (i < dydis - 1) {
-            std::cout << ", ";
-        }
-    }
-    std::cout << "]" << std::endl;
+// Parametrinis konstruktorius
+Student::Student(const char* v, int a, double p) {
+    strcpy(vardas, v);
+    amzius = a;
+    pazymys = p;
+    std::cout << "[TEST] Student sukurtas: " << vardas << std::endl;
 }
 ```
-
-### **Pedagoginės pastabos:**
-- ✅ `IntList::` - scope resolution operator (klasės narys)
-- ✅ `const` metodai - nekeičia objekto būsenos
-- ✅ Error handling - paprastas (`cout` + `return`)
-- ⚠️ Dažna klaida: `dydis++` vietoj `dydis = dydis + 1` (bet abu OK)
-
----
 
 ### **main.cpp:**
 
 ```cpp
 #include <iostream>
-#include "IntList.h"
+#include "Student.h"
 using namespace std;
 
 int main() {
-    cout << "=== IntList 1 žingsnis (fixed array) ===" << endl;
-    
-    // Sukurti IntList
-    IntList sarasas;
-    
-    // Pridėti elementus
-    cout << "\nPridedame 5 elementus:" << endl;
-    for (int i = 1; i <= 5; i++) {
-        sarasas.pridetiGala(i * 10);
-    }
-    
-    // Atspausdinti
-    sarasas.spausdinti();
-    
-    // Gauti elementą
-    cout << "\nElementas [2]: " << sarasas.gautiElementa(2) << endl;
-    
-    // Testas: pilnas masyvas
-    cout << "\nBandome pridėti 100 elementų (turėtų būti klaida):" << endl;
-    IntList didelis;
-    for (int i = 0; i < 105; i++) {
-        didelis.pridetiGala(i);
-    }
-    cout << "Pridėta elementų: " << didelis.gautiDydi() << endl;
+    Student s1;  // Default konstruktorius
+    Student s2("Jonas", 20, 8.5);  // Parametrinis
+    Student s3("Petras", 21, 9.0);
     
     return 0;
 }
@@ -162,7 +201,7 @@ int main() {
 CXX = g++
 CXXFLAGS = -Wall -std=c++11
 
-OBJS = main.o IntList.o
+OBJS = main.o Student.o
 TARGET = programa
 
 all: $(TARGET)
@@ -170,11 +209,11 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) $(OBJS) -o $(TARGET)
 
-main.o: main.cpp IntList.h
+main.o: main.cpp Student.h
 	$(CXX) $(CXXFLAGS) -c main.cpp
 
-IntList.o: IntList.cpp IntList.h
-	$(CXX) $(CXXFLAGS) -c IntList.cpp
+Student.o: Student.cpp Student.h
+	$(CXX) $(CXXFLAGS) -c Student.cpp
 
 clean:
 	rm -f $(OBJS) $(TARGET)
@@ -182,456 +221,675 @@ clean:
 .PHONY: all clean
 ```
 
-### **Kompiliacija ir testavimas:**
-
+### **Kompiliavimas:**
 ```bash
-cd U2/01/
 make
 ./programa
 ```
 
-**Išvestis:**
+### **Išvestis:**
 ```
-=== IntList 1 žingsnis (fixed array) ===
-
-Pridedame 5 elementus:
-IntList dydis: 5
-Elementai: [10, 20, 30, 40, 50]
-
-Elementas [2]: 30
-
-Bandome pridėti 100 elementų (turėtų būti klaida):
-[KLAIDA] Masyvas pilnas!
-[KLAIDA] Masyvas pilnas!
-[KLAIDA] Masyvas pilnas!
-...
-Pridėta elementų: 100
+[TEST] Student sukurtas (default): Nezinomas
+[TEST] Student sukurtas: Jonas
+[TEST] Student sukurtas: Petras
 ```
+
+### **Pedagoginės pastabos:**
+- ✅ Konstruktorius **automatiškai** kviečiamas sukuriant objektą
+- ✅ Default konstruktorius - **be parametrų**
+- ✅ Parametrinis konstruktorius - **su parametrais**
+- ✅ `strcpy()` - C-style string kopijavimas (reikia `<cstring>`)
+- 💡 **Initialization list** (paminėti kaip alternatyvą 4 žingsnyje)
+- ⚠️ Dažna klaida: Užmiršti `strcpy()`, tiesiog `vardas = v` (ne veiks!)
+- ⚠️ Dažna klaida: Pamiršti header guard'us `Student.h` faile
 
 ---
 
-## 2️⃣ **2 žingsnis: Dynamic memory + RAII**
+## 3️⃣ **3 žingsnis: Metodai (getters, setters, pagalbiniai)**
 
-### **IntList.h (modifikuotas):**
+### **Student.h:**
 
 ```cpp
-#ifndef INTLIST_H
-#define INTLIST_H
+#ifndef STUDENT_H
+#define STUDENT_H
 
-class IntList {
+class Student {
 private:
-    int* duomenys;      // Rodyklė į dinaminį masyvą (NAUJAS!)
-    int dydis;          // Dabartinis elementų skaičius
-    int talpa;          // Išskirtos atminties talpa (NAUJAS!)
+    char vardas[50];
+    int amzius;
+    double pazymys;
     
 public:
-    // Konstruktoriai (NAUJI!)
-    IntList();                      // Default: talpa = 10
-    IntList(int pradineTalpa);      // Su parametru
+    // Konstruktoriai
+    Student();
+    Student(const char* v, int a, double p);
     
-    // Destruktorius (NAUJAS!)
-    ~IntList();
+    // Getters (const metodai!)
+    const char* gautiVarda() const;
+    int gautiAmziu() const;
+    double gautiPazymi() const;
     
-    // Metodai (tie patys kaip 1 žingsnyje)
-    void pridetiGala(int reiksme);
-    int gautiElementa(int indeksas) const;
-    int gautiDydi() const;
+    // Setters
+    void nustatytiVarda(const char* v);
+    void nustatytiAmziu(int a);
+    void nustatytiPazymi(double p);
+    
+    // Pagalbiniai metodai
+    bool arPilnametis() const;
     void spausdinti() const;
 };
 
 #endif
 ```
 
+### **Student.cpp:**
+
+```cpp
+#include "Student.h"
+#include <iostream>
+#include <cstring>
+
+// Konstruktoriai (tie patys kaip žingsnis 2)
+Student::Student() {
+    strcpy(vardas, "Nezinomas");
+    amzius = 0;
+    pazymys = 0.0;
+}
+
+Student::Student(const char* v, int a, double p) {
+    strcpy(vardas, v);
+    amzius = a;
+    pazymys = p;
+}
+
+// Getters
+const char* Student::gautiVarda() const {
+    return vardas;
+}
+
+int Student::gautiAmziu() const {
+    return amzius;
+}
+
+double Student::gautiPazymi() const {
+    return pazymys;
+}
+
+// Setters (su patvirtinimu)
+void Student::nustatytiVarda(const char* v) {
+    strcpy(vardas, v);
+}
+
+void Student::nustatytiAmziu(int a) {
+    if (a > 0 && a < 120) {  // Patikrinimas
+        amzius = a;
+    }
+}
+
+void Student::nustatytiPazymi(double p) {
+    if (p >= 0.0 && p <= 10.0) {  // Patikrinimas
+        pazymys = p;
+    }
+}
+
+// Pagalbiniai metodai
+bool Student::arPilnametis() const {
+    return amzius >= 18;
+}
+
+void Student::spausdinti() const {
+    std::cout << "Studentas: " << vardas 
+              << ", Amžius: " << amzius 
+              << ", Pažymys: " << pazymys;
+    
+    if (arPilnametis()) {
+        std::cout << " (pilnametis)";
+    }
+    std::cout << std::endl;
+}
+```
+
+### **main.cpp:**
+
+```cpp
+#include <iostream>
+#include "Student.h"
+using namespace std;
+
+int main() {
+    Student s1("Jonas", 20, 8.5);
+    s1.spausdinti();
+    
+    s1.nustatytiPazymi(9.0);
+    cout << "Naujas pažymys: " << s1.gautiPazymi() << endl;
+    
+    Student s2("Petras", 16, 7.5);
+    s2.spausdinti();
+    
+    return 0;
+}
+```
+
+### **Išvestis:**
+```
+Studentas: Jonas, Amžius: 20, Pažymys: 8.5 (pilnametis)
+Naujas pažymys: 9
+Studentas: Petras, Amžius: 16, Pažymys: 7.5
+```
+
 ### **Pedagoginės pastabos:**
-- ✅ `int*` - rodyklė (pointer)
-- ✅ `talpa` vs `dydis` - svarbu atskirti!
-- ✅ Destruktorius - `~IntList()` (tilde `~`)
+- ✅ `const` metodai - **nekeičia** objekto būsenos (getters, pagalbiniai)
+- ✅ Getters - **tik skaito**, setters - **modifikuoja**
+- ✅ Patikrinimas setter'iuose - **validacija**
+- 💡 Enkapsulacija - privatūs duomenys, public metodai
+- ⚠️ Dažna klaida: Pamiršti `const` getter'iams (kompiliatorius skundžiasi)
+- ⚠️ Dažna klaida: `strcpy(vardas, v)` setter'yje, o ne `vardas = v`
 
 ---
 
-### **IntList.cpp (modifikuotas):**
+## 4️⃣ **4 žingsnis: Static counter + destruktorius**
+
+### **Student.h:**
 
 ```cpp
-#include "IntList.h"
+#ifndef STUDENT_H
+#define STUDENT_H
+
+class Student {
+private:
+    char vardas[50];
+    int amzius;
+    double pazymys;
+    
+    static int sukurtaStudentu;  // Statinis skaitiklis
+    
+public:
+    // Konstruktoriai
+    Student();
+    Student(const char* v, int a, double p);
+    ~Student();  // Destruktorius
+    
+    // Getters
+    const char* gautiVarda() const;
+    int gautiAmziu() const;
+    double gautiPazymi() const;
+    
+    // Setters
+    void nustatytiVarda(const char* v);
+    void nustatytiAmziu(int a);
+    void nustatytiPazymi(double p);
+    
+    // Pagalbiniai
+    bool arPilnametis() const;
+    void spausdinti() const;
+    
+    // Static getter
+    static int gautiSukurtaStudentu();
+};
+
+#endif
+```
+
+### **Student.cpp:**
+
+```cpp
+#include "Student.h"
 #include <iostream>
+#include <cstring>
+
+// Statinio nario inicializacija (už klasės ribų!)
+int Student::sukurtaStudentu = 0;
 
 // Default konstruktorius
-IntList::IntList() {
-    talpa = 10;
-    dydis = 0;
-    duomenys = new int[talpa];  // Dinaminis masyvas!
-    std::cout << "[DEBUG] IntList sukurtas (talpa=" << talpa << ")" << std::endl;
+Student::Student() {
+    strcpy(vardas, "Nezinomas");
+    amzius = 0;
+    pazymys = 0.0;
+    sukurtaStudentu++;
+    std::cout << "[TEST] Student sukurtas (default): " << vardas 
+              << ". Viso studentų: " << sukurtaStudentu << std::endl;
 }
 
-// Konstruktorius su parametru
-IntList::IntList(int pradineTalpa) {
-    talpa = pradineTalpa;
-    dydis = 0;
-    duomenys = new int[talpa];
-    std::cout << "[DEBUG] IntList sukurtas (talpa=" << talpa << ")" << std::endl;
+// Parametrinis konstruktorius
+Student::Student(const char* v, int a, double p) {
+    strcpy(vardas, v);
+    amzius = a;
+    pazymys = p;
+    sukurtaStudentu++;
+    std::cout << "[TEST] Student sukurtas: " << vardas 
+              << ". Viso studentų: " << sukurtaStudentu << std::endl;
 }
 
 // Destruktorius
-IntList::~IntList() {
-    std::cout << "[DEBUG] IntList naikinamas (dydis=" << dydis 
-              << ", talpa=" << talpa << ")" << std::endl;
-    delete[] duomenys;      // Atlaisvinti atmintį
-    duomenys = nullptr;     // Saugumui
+Student::~Student() {
+    sukurtaStudentu--;
+    std::cout << "[TEST] Student sunaikintas: " << vardas 
+              << ". Liko studentų: " << sukurtaStudentu << std::endl;
 }
 
-// Pridėti elementą
-void IntList::pridetiGala(int reiksme) {
-    if (dydis >= talpa) {
-        std::cout << "[KLAIDA] IntList pilnas (talpa=" << talpa << ")!" << std::endl;
-        return;
-    }
-    duomenys[dydis] = reiksme;
-    dydis++;
-}
+// Getters, setters, pagalbiniai (tie patys kaip žingsnis 3)
+// ...
 
-// Gauti elementą (tas pats)
-int IntList::gautiElementa(int indeksas) const {
-    if (indeksas < 0 || indeksas >= dydis) {
-        std::cout << "[KLAIDA] Blogas indeksas!" << std::endl;
-        return -1;
-    }
-    return duomenys[indeksas];
-}
-
-// Gauti dydį (tas pats)
-int IntList::gautiDydi() const {
-    return dydis;
-}
-
-// Spausdinti (tas pats)
-void IntList::spausdinti() const {
-    std::cout << "IntList dydis: " << dydis << " / talpa: " << talpa << std::endl;
-    std::cout << "Elementai: [";
-    for (int i = 0; i < dydis; i++) {
-        std::cout << duomenys[i];
-        if (i < dydis - 1) {
-            std::cout << ", ";
-        }
-    }
-    std::cout << "]" << std::endl;
+// Static getter
+int Student::gautiSukurtaStudentu() {
+    return sukurtaStudentu;
 }
 ```
 
-### **Pedagoginės pastabos:**
-- ✅ `new int[talpa]` - išskirti dinaminį masyvą
-- ✅ `delete[] duomenys` - **SVARBU**: `delete[]` (su `[]`), ne `delete`!
-- ✅ `nullptr` po `delete[]` - gera praktika (dangling pointer prevention)
-- ✅ Logging - matome, kada konstruktorius/destruktorius kviečiami
-- ⚠️ **KRITINĖ KLAIDA**: `delete duomenys` vietoj `delete[] duomenys` → undefined behavior!
-
----
-
-### **main.cpp (modifikuotas):**
+### **main.cpp:**
 
 ```cpp
 #include <iostream>
-#include "IntList.h"
+#include "Student.h"
 using namespace std;
 
 int main() {
-    cout << "=== IntList 2 žingsnis (dynamic memory + RAII) ===" << endl;
+    cout << "Studentų: " << Student::gautiSukurtaStudentu() << endl;  // 0
     
-    // Testas 1: Default konstruktorius
-    cout << "\n--- Testas 1: Default konstruktorius ---" << endl;
     {
-        IntList sarasas;  // talpa = 10
-        for (int i = 1; i <= 5; i++) {
-            sarasas.pridetiGala(i * 10);
-        }
-        sarasas.spausdinti();
-    } // Destruktorius čia!
-    cout << "Destruktorius jau iškviečiamas (scope pabaiga)" << endl;
+        Student s1("Jonas", 20, 8.5);
+        Student s2("Petras", 21, 9.0);
+        cout << "Studentų: " << Student::gautiSukurtaStudentu() << endl;  // 2
+    }  // s1 ir s2 sunaikinami čia
     
-    // Testas 2: Konstruktorius su parametru
-    cout << "\n--- Testas 2: Konstruktorius su parametru ---" << endl;
-    {
-        IntList mazosSarasas(3);  // talpa = 3
-        mazosSarasas.pridetiGala(100);
-        mazosSarasas.pridetiGala(200);
-        mazosSarasas.pridetiGala(300);
-        mazosSarasas.spausdinti();
-        
-        // Bandome pridėti 4-ą (turėtų būti klaida)
-        cout << "\nBandome pridėti 4-ą elementą (klaida!):" << endl;
-        mazosSarasas.pridetiGala(400);
-    } // Destruktorius čia!
+    cout << "Studentų: " << Student::gautiSukurtaStudentu() << endl;  // 0
     
-    // Testas 3: Daug objektų
-    cout << "\n--- Testas 3: Daug objektų ---" << endl;
-    {
-        IntList s1, s2, s3;
-        s1.pridetiGala(1);
-        s2.pridetiGala(2);
-        s3.pridetiGala(3);
-        cout << "Sukurti 3 objektai (destruktoriai bus iškviečiami reverse order)" << endl;
-    } // 3 destruktoriai čia!
-    
-    cout << "\n=== Programa baigta ===" << endl;
     return 0;
 }
 ```
 
-**Išvestis:**
+### **Išvestis:**
 ```
-=== IntList 2 žingsnis (dynamic memory + RAII) ===
-
---- Testas 1: Default konstruktorius ---
-[DEBUG] IntList sukurtas (talpa=10)
-IntList dydis: 5 / talpa: 10
-Elementai: [10, 20, 30, 40, 50]
-[DEBUG] IntList naikinamas (dydis=5, talpa=10)
-Destruktorius jau iškviečiamas (scope pabaiga)
-
---- Testas 2: Konstruktorius su parametru ---
-[DEBUG] IntList sukurtas (talpa=3)
-IntList dydis: 3 / talpa: 3
-Elementai: [100, 200, 300]
-
-Bandome pridėti 4-ą elementą (klaida!):
-[KLAIDA] IntList pilnas (talpa=3)!
-[DEBUG] IntList naikinamas (dydis=3, talpa=3)
-
---- Testas 3: Daug objektų ---
-[DEBUG] IntList sukurtas (talpa=10)
-[DEBUG] IntList sukurtas (talpa=10)
-[DEBUG] IntList sukurtas (talpa=10)
-Sukurti 3 objektai (destruktoriai bus iškviečiami reverse order)
-[DEBUG] IntList naikinamas (dydis=1, talpa=10)
-[DEBUG] IntList naikinamas (dydis=1, talpa=10)
-[DEBUG] IntList naikinamas (dydis=1, talpa=10)
-
-=== Programa baigta ===
+Studentų: 0
+[TEST] Student sukurtas: Jonas. Viso studentų: 1
+[TEST] Student sukurtas: Petras. Viso studentų: 2
+Studentų: 2
+[TEST] Student sunaikintas: Petras. Liko studentų: 1
+[TEST] Student sunaikintas: Jonas. Liko studentų: 0
+Studentų: 0
 ```
 
 ### **Pedagoginės pastabos:**
-- ✅ **Scope** `{ ... }` - destruktorius automatiškai kviečiamas scope pabaigoje
-- ✅ **Reverse order** - konstruktoriai: 1→2→3, destruktoriai: 3→2→1 (stack unwinding)
-- 💡 **Diskusijos taškas**: "Kodėl destruktoriai reverse order?" (stack semantics)
+- ✅ **Static** narys - **bendras visiems objektams** (ne kiekvienas turi savo)
+- ✅ Inicializacija **už klasės ribų**: `int Student::sukurtaStudentu = 0;`
+- ✅ Destruktorius - **automatiškai** kviečiamas išeinant iš scope
+- ✅ Static getter - galima kviesti **be objekto**: `Student::gautiSukurtaStudentu()`
+- 💡 **Initialization list alternatyva** (paminėti studentams):
+  ```cpp
+  Student::Student(const char* v, int a, double p) 
+      : amzius(a), pazymys(p)  // Initialization list
+  {
+      strcpy(vardas, v);  // char[] reikia body'je
+      sukurtaStudentu++;
+  }
+  ```
+- ⚠️ Dažna klaida: Pamiršti inicializuoti static narį už klasės (`int Student::sukurtaStudentu = 0;`)
+- ⚠️ Dažna klaida: Bandyti inicializuoti static narį konstruktoriuje (`sukurtaStudentu = 0` - blogai!)
 
 ---
 
-## 3️⃣ **3 žingsnis: Automatinis išplėtimas**
+## 5️⃣ **5 žingsnis: Pažymių masyvas**
 
-### **IntList.h (papildymas):**
+### **Student.h:**
 
 ```cpp
-#ifndef INTLIST_H
-#define INTLIST_H
+#ifndef STUDENT_H
+#define STUDENT_H
 
-class IntList {
+class Student {
 private:
-    int* duomenys;
-    int dydis;
-    int talpa;
+    char vardas[50];
+    int amzius;
     
-    // Private metodas (NAUJAS!)
-    void isplesti();
+    // Pažymių masyvas
+    static const int MAX_PAZYMIU = 20;
+    double pazymiai[MAX_PAZYMIU];
+    int pazymiuKiekis;
+    
+    static int sukurtaStudentu;
     
 public:
-    IntList();
-    IntList(int pradineTalpa);
-    ~IntList();
+    // Konstruktoriai (be pažymio parametro!)
+    Student();
+    Student(const char* v, int a);
+    ~Student();
     
-    void pridetiGala(int reiksme);
-    int gautiElementa(int indeksas) const;
-    int gautiDydi() const;
-    int gautiTalpa() const;  // NAUJAS - debugging
+    // Getters
+    const char* gautiVarda() const;
+    int gautiAmziu() const;
+    
+    // Setters
+    void nustatytiVarda(const char* v);
+    void nustatytiAmziu(int a);
+    
+    // Pažymių metodai
+    void pridetiPazymi(double p);
+    double skaiciuotiVidurki() const;
+    void spausdintiPazymius() const;
+    
+    // Pagalbiniai
+    bool arPilnametis() const;
     void spausdinti() const;
+    
+    // Static
+    static int gautiSukurtaStudentu();
 };
 
 #endif
 ```
 
----
-
-### **IntList.cpp (galutinė versija):**
+### **Student.cpp:**
 
 ```cpp
-#include "IntList.h"
+#include "Student.h"
 #include <iostream>
+#include <cstring>
 
-// Konstruktoriai (tie patys)
-IntList::IntList() {
-    talpa = 10;
-    dydis = 0;
-    duomenys = new int[talpa];
-    std::cout << "[DEBUG] IntList sukurtas (talpa=" << talpa << ")" << std::endl;
+int Student::sukurtaStudentu = 0;
+
+// Default konstruktorius
+Student::Student() {
+    strcpy(vardas, "Nezinomas");
+    amzius = 0;
+    pazymiuKiekis = 0;  // Pradžioje 0 pažymių
+    sukurtaStudentu++;
+    std::cout << "[TEST] Student sukurtas (default): " << vardas 
+              << ". Viso studentų: " << sukurtaStudentu << std::endl;
 }
 
-IntList::IntList(int pradineTalpa) {
-    talpa = pradineTalpa;
-    dydis = 0;
-    duomenys = new int[talpa];
-    std::cout << "[DEBUG] IntList sukurtas (talpa=" << talpa << ")" << std::endl;
+// Parametrinis konstruktorius (be pažymio!)
+Student::Student(const char* v, int a) {
+    strcpy(vardas, v);
+    amzius = a;
+    pazymiuKiekis = 0;
+    sukurtaStudentu++;
+    std::cout << "[TEST] Student sukurtas: " << vardas 
+              << ". Viso studentų: " << sukurtaStudentu << std::endl;
 }
 
-// Destruktorius (tas pats)
-IntList::~IntList() {
-    std::cout << "[DEBUG] IntList naikinamas (dydis=" << dydis 
-              << ", talpa=" << talpa << ")" << std::endl;
-    delete[] duomenys;
-    duomenys = nullptr;
+// Destruktorius
+Student::~Student() {
+    sukurtaStudentu--;
+    std::cout << "[TEST] Student sunaikintas: " << vardas 
+              << ". Liko studentų: " << sukurtaStudentu << std::endl;
 }
 
-// NAUJAS: Privatus metodas - išplėsti masyvą
-void IntList::isplesti() {
-    int naujaTalpa = talpa + 5;  // Didinti po 5
-    
-    std::cout << "[DEBUG] IntList isplesta (sena talpa=" << talpa 
-              << ", nauja talpa=" << naujaTalpa << ")" << std::endl;
-    
-    // 1. Išskirti naują masyvą
-    int* naujasDuomenys = new int[naujaTalpa];
-    
-    // 2. Nukopijuoti senus duomenis
-    for (int i = 0; i < dydis; i++) {
-        naujasDuomenys[i] = duomenys[i];
+// Getters, setters (tie patys)
+// ...
+
+// Pažymių metodai
+void Student::pridetiPazymi(double p) {
+    if (pazymiuKiekis < MAX_PAZYMIU && p >= 0.0 && p <= 10.0) {
+        pazymiai[pazymiuKiekis] = p;
+        pazymiuKiekis++;
+    } else {
+        std::cout << "[KLAIDA] Negalima pridėti pažymio!" << std::endl;
+    }
+}
+
+double Student::skaiciuotiVidurki() const {
+    if (pazymiuKiekis == 0) {
+        return 0.0;
     }
     
-    // 3. Atlaisvinti seną masyvą
-    delete[] duomenys;
+    double suma = 0.0;
+    for (int i = 0; i < pazymiuKiekis; i++) {
+        suma += pazymiai[i];
+    }
     
-    // 4. Priskirti naują masyvą
-    duomenys = naujasDuomenys;
-    talpa = naujaTalpa;
+    return suma / pazymiuKiekis;
 }
 
-// MODIFIKUOTAS: Pridėti elementą (dabar su auto-expand)
-void IntList::pridetiGala(int reiksme) {
-    if (dydis >= talpa) {
-        isplesti();  // Automatinis išplėtimas!
-    }
-    duomenys[dydis] = reiksme;
-    dydis++;
-}
-
-// Kiti metodai (tie patys)
-int IntList::gautiElementa(int indeksas) const {
-    if (indeksas < 0 || indeksas >= dydis) {
-        std::cout << "[KLAIDA] Blogas indeksas!" << std::endl;
-        return -1;
-    }
-    return duomenys[indeksas];
-}
-
-int IntList::gautiDydi() const {
-    return dydis;
-}
-
-// NAUJAS - debugging
-int IntList::gautiTalpa() const {
-    return talpa;
-}
-
-void IntList::spausdinti() const {
-    std::cout << "IntList dydis: " << dydis << " / talpa: " << talpa << std::endl;
-    std::cout << "Elementai: [";
-    for (int i = 0; i < dydis; i++) {
-        std::cout << duomenys[i];
-        if (i < dydis - 1) {
+void Student::spausdintiPazymius() const {
+    std::cout << "Pažymiai (" << pazymiuKiekis << "): ";
+    for (int i = 0; i < pazymiuKiekis; i++) {
+        std::cout << pazymiai[i];
+        if (i < pazymiuKiekis - 1) {
             std::cout << ", ";
         }
     }
-    std::cout << "]" << std::endl;
+    std::cout << std::endl;
+}
+
+void Student::spausdinti() const {
+    std::cout << "Studentas: " << vardas 
+              << ", Amžius: " << amzius << std::endl;
+    spausdintiPazymius();
+    std::cout << "Vidurkis: " << skaiciuotiVidurki() << std::endl;
+}
+
+int Student::gautiSukurtaStudentu() {
+    return sukurtaStudentu;
 }
 ```
 
-### **Pedagoginės pastabos:**
-- ✅ `isplesti()` - **private** metodas (internal implementation detail)
-- ✅ **Reallocation algoritmas**:
-  1. Išskirti naują didesnį masyvą
-  2. Kopijuoti senus duomenis
-  3. Atlaisvinti seną
-  4. Priskirti naują
-- ⚠️ **KRITINĖ KLAIDA**: Kopijuoti **prieš** `delete[]` (priešingu atveju - duomenų praradimas!)
-- 💡 **Optimizacija**: Growth factor (dabar +5, galima *2 - logaritminis growth)
-
----
-
-### **main.cpp (galutinis testas):**
+### **main.cpp:**
 
 ```cpp
 #include <iostream>
-#include "IntList.h"
+#include "Student.h"
 using namespace std;
 
 int main() {
-    cout << "=== IntList 3 žingsnis (auto-expand) ===" << endl;
+    Student s1("Jonas", 20);
     
-    // Testas 1: Mažas talpa, daug elementų
-    cout << "\n--- Testas 1: Mažas talpa (3), pridedame 10 elementų ---" << endl;
-    IntList sarasas(3);
-    for (int i = 1; i <= 10; i++) {
-        cout << "Pridedame " << (i * 10) << "..." << endl;
-        sarasas.pridetiGala(i * 10);
-    }
-    sarasas.spausdinti();
+    s1.pridetiPazymi(8.5);
+    s1.pridetiPazymi(9.0);
+    s1.pridetiPazymi(7.5);
+    s1.pridetiPazymi(8.0);
     
-    // Testas 2: Default talpa, daug elementų
-    cout << "\n--- Testas 2: Default talpa (10), pridedame 20 elementų ---" << endl;
-    IntList didelis;
-    for (int i = 1; i <= 20; i++) {
-        didelis.pridetiGala(i);
-    }
-    didelis.spausdinti();
+    s1.spausdinti();
     
-    // Testas 3: Labai mažas talpa (1), demonstruoti daug išplėtimų
-    cout << "\n--- Testas 3: Talpa=1, pridedame 7 elementus (daug išplėtimų) ---" << endl;
-    IntList mazytis(1);
-    for (int i = 0; i < 7; i++) {
-        mazytis.pridetiGala(i * 100);
-    }
-    mazytis.spausdinti();
-    
-    cout << "\n=== Programa baigta (destruktoriai bus iškviečiami) ===" << endl;
     return 0;
 }
 ```
 
-**Išvestis:**
+### **Išvestis:**
 ```
-=== IntList 3 žingsnis (auto-expand) ===
+[TEST] Student sukurtas: Jonas. Viso studentų: 1
+Studentas: Jonas, Amžius: 20
+Pažymiai (4): 8.5, 9, 7.5, 8
+Vidurkis: 8.25
+[TEST] Student sunaikintas: Jonas. Liko studentų: 0
+```
 
---- Testas 1: Mažas talpa (3), pridedame 10 elementų ---
-[DEBUG] IntList sukurtas (talpa=3)
-Pridedame 10...
-Pridedame 20...
-Pridedame 30...
-Pridedame 40...
-[DEBUG] IntList isplesta (sena talpa=3, nauja talpa=8)
-Pridedame 50...
-Pridedame 60...
-Pridedame 70...
-Pridedame 80...
-Pridedame 90...
-[DEBUG] IntList isplesta (sena talpa=8, nauja talpa=13)
-Pridedame 100...
-IntList dydis: 10 / talpa: 13
-Elementai: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+### **Pedagoginės pastabos:**
+- ✅ Masyvas `double pazymiai[MAX_PAZYMIU]` + `int pazymiuKiekis` - kaip U1
+- ✅ Patikrinimas: `pazymiuKiekis < MAX_PAZYMIU` (ribos)
+- ✅ Vidurkio skaičiavimas - suma / kiekis
+- 💡 Kitas žingsnis - vector (dinaminis, be limitų)
+- ⚠️ Dažna klaida: Pamiršti `pazymiuKiekis = 0` konstruktoriuje
+- ⚠️ Dažna klaida: `pazymiai[pazymiuKiekis++] = p` vietoj dviejų eilučių
+- ⚠️ Dažna klaida: Off-by-one kablelių spausdinime (`i < pazymiuKiekis - 1`)
 
---- Testas 2: Default talpa (10), pridedame 20 elementų ---
-[DEBUG] IntList sukurtas (talpa=10)
-[DEBUG] IntList isplesta (sena talpa=10, nauja talpa=15)
-[DEBUG] IntList isplesta (sena talpa=15, nauja talpa=20)
-IntList dydis: 20 / talpa: 20
-Elementai: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+---
 
---- Testas 3: Talpa=1, pridedame 7 elementus (daug išplėtimų) ---
-[DEBUG] IntList sukurtas (talpa=1)
-[DEBUG] IntList isplesta (sena talpa=1, nauja talpa=6)
-[DEBUG] IntList isplesta (sena talpa=6, nauja talpa=11)
-IntList dydis: 7 / talpa: 11
-Elementai: [0, 100, 200, 300, 400, 500, 600]
+## 6️⃣ **BONUS žingsnis: Masyvas → vector**
 
-=== Programa baigta (destruktoriai bus iškviečiami) ===
-[DEBUG] IntList naikinamas (dydis=7, talpa=11)
-[DEBUG] IntList naikinamas (dydis=20, talpa=20)
-[DEBUG] IntList naikinamas (dydis=10, talpa=13)
+### **Student.h:**
+
+```cpp
+#ifndef STUDENT_H
+#define STUDENT_H
+
+#include <vector>  // SVARBU!
+
+class Student {
+private:
+    char vardas[50];
+    int amzius;
+    
+    // Vector vietoj masyvo
+    std::vector<double> pazymiai;
+    
+    static int sukurtaStudentu;
+    
+public:
+    // Konstruktoriai
+    Student();
+    Student(const char* v, int a);
+    ~Student();
+    
+    // Getters, setters
+    const char* gautiVarda() const;
+    int gautiAmziu() const;
+    void nustatytiVarda(const char* v);
+    void nustatytiAmziu(int a);
+    
+    // Pažymių metodai
+    void pridetiPazymi(double p);
+    double skaiciuotiVidurki() const;
+    void spausdintiPazymius() const;
+    
+    // Pagalbiniai
+    bool arPilnametis() const;
+    void spausdinti() const;
+    
+    // Static
+    static int gautiSukurtaStudentu();
+};
+
+#endif
+```
+
+### **Student.cpp:**
+
+```cpp
+#include "Student.h"
+#include <iostream>
+#include <cstring>
+
+int Student::sukurtaStudentu = 0;
+
+// Konstruktoriai (pazymiai jau tuščias vector)
+Student::Student() {
+    strcpy(vardas, "Nezinomas");
+    amzius = 0;
+    // pazymiai - default konstruktorius (tuščias vector)
+    sukurtaStudentu++;
+}
+
+Student::Student(const char* v, int a) {
+    strcpy(vardas, v);
+    amzius = a;
+    // pazymiai - default konstruktorius (tuščias vector)
+    sukurtaStudentu++;
+}
+
+// Pažymių metodai (atnaujinti su vector)
+void Student::pridetiPazymi(double p) {
+    if (p >= 0.0 && p <= 10.0) {
+        pazymiai.push_back(p);  // Vietoj pazymiai[pazymiuKiekis++]
+    } else {
+        std::cout << "[KLAIDA] Netinkamas pažymys!" << std::endl;
+    }
+}
+
+double Student::skaiciuotiVidurki() const {
+    if (pazymiai.empty()) {  // Vietoj pazymiuKiekis == 0
+        return 0.0;
+    }
+    
+    double suma = 0.0;
+    for (double p : pazymiai) {  // Range-based for loop!
+        suma += p;
+    }
+    
+    return suma / pazymiai.size();  // Vietoj pazymiuKiekis
+}
+
+void Student::spausdintiPazymius() const {
+    std::cout << "Pažymiai (" << pazymiai.size() << "): ";
+    for (size_t i = 0; i < pazymiai.size(); i++) {
+        std::cout << pazymiai[i];
+        if (i < pazymiai.size() - 1) {
+            std::cout << ", ";
+        }
+    }
+    std::cout << std::endl;
+}
+
+// Kiti metodai tie patys kaip žingsnis 5
+// ...
+```
+
+### **main.cpp (tas pats kaip žingsnis 5):**
+
+```cpp
+#include <iostream>
+#include "Student.h"
+using namespace std;
+
+int main() {
+    Student s1("Jonas", 20);
+    
+    // Pridedame daugiau nei 20 pažymių - veiks!
+    for (int i = 0; i < 25; i++) {
+        s1.pridetiPazymi(7.0 + i * 0.1);
+    }
+    
+    s1.spausdinti();
+    
+    return 0;
+}
+```
+
+### **Pedagoginės pastabos:**
+- ✅ Vector **dinamiškai plečiasi** - ne limitų!
+- ✅ `.push_back(p)` - vietoj `pazymiai[pazymiuKiekis++] = p`
+- ✅ `.size()` - vietoj `pazymiuKiekis`
+- ✅ `.empty()` - vietoj `pazymiuKiekis == 0`
+- ✅ Range-based for loop: `for (double p : pazymiai)` - moderniškas C++
+- 💡 Vector **automatiškai** valdo atmintį (RAII)
+- ⚠️ Dažna klaida: `pazymiai.size()` grąžina `size_t` (unsigned) - galimi warning'ai
+
+---
+
+## 📦 **README.md pavyzdys**
+
+```markdown
+# U2: OOP Pagrindai. Klasės ir Objektai
+
+**Būsena**: ✅ Atlikta  
+**Pateikta**: 2026-03-01
+
+---
+
+## 📁 Žingsniai
+
+| Žingsnis | Direktorija | Aprašymas |
+|----------|-------------|-----------|
+| 1 | `01/` | Struct → Class transformacija |
+| 2 | `02/` | Konstruktoriai (default + parametrinis) |
+| 3 | `03/` | Metodai (getters, setters, pagalbiniai) |
+| 4 | `04/` | Static counter + destruktorius |
+| 5 | `05/` | Pažymių masyvas |
+| 6 | `06-bonus/` | BONUS: array → vector |
+
+---
+
+## 🧪 Testavimas
+
+**Testas 1 (konstruktoriai)**:
+
+    [TEST] Student sukurtas: Jonas. Viso studentų: 1
+    ✅ VEIKIA
+
+**Testas 2 (pažymių vidurkis)**:
+
+    Pažymiai (4): 8.5, 9, 7.5, 8
+    Vidurkis: 8.25
+    ✅ VEIKIA
+
+---
+
+## 💭 Pagrindinės įžvalgos
+
+1. Class vs Struct - private vs public
+2. Konstruktoriai inicializuoja objektą
+3. Static nariai - bendri visiems objektams
+4. Destruktorius - automatiškas cleanup
+5. Masyvas → vector (lankstesnis!)
 ```
 
 ---
@@ -642,111 +900,55 @@ Elementai: [0, 100, 200, 300, 400, 500, 600]
 
 | Klaida | Dažnumas | Sprendimas |
 |--------|----------|------------|
-| `delete duomenys` vietoj `delete[]` | ⭐⭐⭐⭐⭐ | **Kritinė klaida!** Undefined behavior |
-| Neužkomentavo destruktoriaus logging | ⭐⭐⭐⭐ | Nematys, kada destruktorius kviečiamas |
-| `isplesti()` kopijuoja **po** `delete[]` | ⭐⭐⭐ | Duomenų praradimas! |
-| Pamiršo `nullptr` po `delete[]` | ⭐⭐⭐ | Dangling pointer (ne kritinė, bet svarbu) |
-| `talpa` vs `dydis` painiava | ⭐⭐ | Paaiškinti skirtumą |
-| Konstruktorius be logging | ⭐⭐ | Nematys konstruktoriaus kvietimų |
+| Pamiršo `;` po klasės deklaracijos | ⭐⭐⭐⭐⭐ | Kompiliavimo klaida - parodyti |
+| `vardas = v` vietoj `strcpy(vardas, v)` | ⭐⭐⭐⭐ | Paaiškinti C-style strings |
+| Pamiršo `const` getter'iams | ⭐⭐⭐⭐ | Kompiliatorius skundžiasi |
+| Pamiršo inicializuoti static narį už klasės | ⭐⭐⭐⭐ | Linking error |
+| Bandė inicializuoti static narį konstruktoriuje | ⭐⭐⭐ | Logic error - skaitiklis neteisingas |
+| Pamiršo header guard'us | ⭐⭐⭐ | Multiple definition error |
+| `pazymiuKiekis` ne inicializuotas | ⭐⭐⭐ | Undefined behavior |
+| Off-by-one kablelių spausdinime | ⭐⭐ | Estetinė problema |
+
+### **Galimi praplėtimai stipriesiems:**
+
+1. **Initialization list naudojimas**
+   - Pademonstruoti efektyvumą (ne copy)
+   
+2. **Overload'inti operator<<**
+   - `cout << s1` vietoj `s1.spausdinti()`
+   
+3. **Copy constructor**
+   - Nors čia dar nereikia (žingsnis 5 vector jau turi default'ą)
+   
+4. **Const correctness**
+   - Visur kur galima `const`
+
+5. **std::string vietoj char[]**
+   - Modernesnis C++
 
 ---
 
-### **Diskusijos taškai paskaitose:**
+## 💡 **Diskusijos taškai paskaitoje**
 
-1. **RAII principas:**
-   - "Kas būtų, jei užmirštume `delete[]`?" → Memory leak!
-   - "Kodėl destruktorius **automatiškai** kviečiamas?" → RAII magic
-
-2. **`delete` vs `delete[]`:**
-   - Parodyti undefined behavior pavyzdį
-   - Valgrind demo (jei galima)
-
-3. **Growth strategy:**
-   - Dabar: +5 (linear)
-   - `std::vector`: ×2 (exponential)
-   - Trade-off: memory vs reallocations
-
-4. **Destruktorių tvarka:**
-   - Stack unwinding (LIFO)
-   - Reverse order demonstration
-
-5. **Foreshadowing:**
-   - "Vėliau išmoksime **copy constructor** - dabar shallow copy problema!"
-   - "Kas būtų, jei `IntList s2 = s1;`?" → Dangling pointer!
-
----
-
-### **Praplėtimai stipriesiems:**
-
-1. **Growth factor:**
-   - Pakeisti `talpa + 5` → `talpa * 2`
-   - Palyginti reallocations skaičių
-
-2. **Capacity reserve:**
-   - Pridėti `void rezervuoti(int naujaTalpa)`
-   - Preallocate jei žinome, kiek reikia
-
-3. **Error handling su exceptions:**
-   - `throw std::bad_alloc` jei `new` fails
-   - `throw std::out_of_range` jei indeksas blogas
-
-4. **Debugging metodai:**
-   - `void spausdintiDebug()` - parodyti memory address, talpa, dydis
-   - `bool arTuscias()`, `bool arPilnas()`
-
-5. **Additional methods:**
-   - `void pasalinti(int indeksas)` - remove element
-   - `void isvalyti()` - clear all elements
-
----
-
-## 💡 **Testai (extra):**
-
-### **Memory leak testas:**
-
-```cpp
-// Sukurti daug objektų - neturėtų būti memory leak
-for (int i = 0; i < 1000; i++) {
-    IntList temp(100);
-    for (int j = 0; j < 50; j++) {
-        temp.pridetiGala(j);
-    }
-} // 1000 destruktorių - visos atmintis atlaisvinta?
-```
-
-**Tikrinti su Valgrind:**
-```bash
-g++ -g main.cpp IntList.cpp -o programa
-valgrind --leak-check=full ./programa
-```
-
-**Rezultatas (jei teisingai):**
-```
-All heap blocks were freed -- no leaks are possible
-```
-
----
-
-### **Performance testas:**
-
-```cpp
-#include <chrono>
-
-auto start = std::chrono::high_resolution_clock::now();
-
-IntList didelis(1);  // Mažas talpa
-for (int i = 0; i < 100000; i++) {
-    didelis.pridetiGala(i);
-}
-
-auto end = std::chrono::high_resolution_clock::now();
-auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-
-cout << "Laikas: " << duration.count() << " ms" << endl;
-cout << "Reallocations: " << (didelis.gautiTalpa() - 1) / 5 << endl;
-```
-
-**Diskusija:** Linear (+5) vs Exponential (×2) growth
+1. **Struct vs Class**
+   - Tik keyword'o skirtumas
+   - Praktikoje: `struct` - duomenims, `class` - objektams su logika
+   
+2. **Enkapsulacija**
+   - Kodėl `private` + getters/setters?
+   - Validacija, kontrolė, flexibility
+   
+3. **Static nariai**
+   - Kada naudoti? (counter'iai, config, shared state)
+   - Kodėl inicializuoti už klasės?
+   
+4. **Destruktorius**
+   - Kada kviečiamas? (scope)
+   - Vėliau: dynamic memory cleanup
+   
+5. **Masyvas vs Vector**
+   - Trade-off'ai (performance vs flexibility)
+   - RAII principas (vector valdo atmintį)
 
 ---
 
